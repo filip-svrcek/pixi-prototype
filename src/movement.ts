@@ -1,17 +1,17 @@
 import { Sprite } from "pixi.js";
+import { MOVEMENT_INCREMENT } from "./constants";
 
 export function handleMovement(sprite: Sprite, pressedKeys: string[]) {
-  console.log("pressedKeys", pressedKeys);
   if (pressedKeys.includes("ArrowUp")) {
-    sprite.y -= 20;
+    sprite.y -= MOVEMENT_INCREMENT;
   }
   if (pressedKeys.includes("ArrowDown")) {
-    sprite.y += 20;
+    sprite.y += MOVEMENT_INCREMENT;
   }
   if (pressedKeys.includes("ArrowLeft")) {
-    sprite.x -= 20;
+    sprite.x -= MOVEMENT_INCREMENT;
   }
   if (pressedKeys.includes("ArrowRight")) {
-    sprite.x += 20;
+    sprite.x += MOVEMENT_INCREMENT;
   }
 }
