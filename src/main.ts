@@ -61,5 +61,5 @@ function handlePressedKeys(e: KeyboardEvent) {
 
 // Listen for frame updates
 app.ticker.add(() => {
-  handleMovement(player, pressedKeys, collisionMap);
+  handleMovement(player, pressedKeys);
 });

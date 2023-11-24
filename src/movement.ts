@@ -29,7 +29,6 @@ export function makeCharacterFall(
 export function handleMovement(
   character: Sprite,
   pressedKeys: string[],
-  collisionMap: Container<DisplayObject>,
 ) {
   if (pressedKeys.includes("ArrowLeft")) {
     character.x -= MOVEMENT_INCREMENT;
