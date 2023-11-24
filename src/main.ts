@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 
 import cartmanFront from "./assets/front.png";
 import { handleMovement } from "./movement";
+import { createCollisionMap } from "./collisionMap";
+import { drawHexagonBoard } from "./graphics";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -17,21 +19,33 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view as unknown as Node);
 
 // load the texture we need
-const texture = await PIXI.Assets.load(cartmanFront);
+const texturePlayer = await PIXI.Assets.load(cartmanFront);
 
-// This creates a texture from a 'cartman.png' image
-const cartman = new PIXI.Sprite(texture);
+const boardGrid = drawHexagonBoard([
+  [1, 1, 1],
+  [1, 0, 1, 0],
+  [1, 1, 0],
+  [1, 1, 1, 0],
+]);
 
-// Setup the position of the cartman
-cartman.x = app.renderer.width / 2;
-cartman.y = app.renderer.height / 2;
+// This creates a texture
+const player = new PIXI.Sprite(texturePlayer);
 
-// Rotate around the center
-cartman.anchor.x = 0.5;
-cartman.anchor.y = 0.5;
+const collisionMap = createCollisionMap(app);
 
-// Add the cartman to the scene we are building
-app.stage.addChild(cartman);
+// Setup the position of the player
+player.x = app.renderer.width / 2;
+player.y = app.renderer.height / 2;
+player.scale.set(0.5, 0.5);
+
+
+boardGrid.x = app.renderer.width / 2;
+boardGrid.y = app.renderer.height / 2;
+
+// Populate the stage
+app.stage.addChild(collisionMap);
+app.stage.addChild(player);
+app.stage.addChild(boardGrid);
 
 // Handle keyboard events
 document.addEventListener("keydown", (e) => handlePressedKeys(e));
@@ -45,7 +59,7 @@ function handlePressedKeys(e: KeyboardEvent) {
   }
 }
 
-// // Listen for frame updates
+// Listen for frame updates
 app.ticker.add(() => {
-  handleMovement(cartman, pressedKeys);
+  handleMovement(player, pressedKeys, collisionMap);
 });
