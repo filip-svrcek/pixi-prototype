@@ -37,7 +37,7 @@ export const drawHexagon = () => {
   return graphics;
 };
 
-export const drawHexagonBoard = (map: number[][]) => {
+export const drawHexagonBoard = (map: number[][], playerSprite: PIXI.Sprite) => {
   const grid = new PIXI.Container();
   const size = 50;
   const points = [];
@@ -63,10 +63,17 @@ export const drawHexagonBoard = (map: number[][]) => {
       graphics.endFill();
       graphics.interactive = true;
       graphics.on("mouseover", () => {
-        graphics.tint = 0x00ff00;
+        if(graphics.tint !== 0x000000)
+        {graphics.tint = 0x00ff00;}
       });
       graphics.on("mouseout", () => {
-        graphics.tint = 0xff0000;
+        if(graphics.tint !== 0x000000)
+        {graphics.tint = 0xff0000;}
+      });
+      graphics.on('click', () => {
+        playerSprite.x = graphics._bounds.minX+580;
+        playerSprite.y = graphics._bounds.minY+290;
+        console.log(graphics);
       });
       x += 1.8 * size;
     }
