@@ -22,6 +22,11 @@ const texturePlayer = await PIXI.Assets.load(knight);
 // This creates a texture
 const player = new PIXI.Sprite(texturePlayer);
 
+// Setup the position of the player
+player.x = app.renderer.width / 2;
+player.y = app.renderer.height / 2;
+player.scale.set(0.2, 0.2);
+
 const boardGrid = drawHexagonBoard(
   [
     [1, 1, 1, 1, 1],
@@ -33,11 +38,6 @@ const boardGrid = drawHexagonBoard(
   ],
   player,
 );
-
-// Setup the position of the player
-player.x = app.renderer.width / 2;
-player.y = app.renderer.height / 2;
-player.scale.set(0.2, 0.2);
 
 const boardGridWidth = boardGrid.width;
 const boardGridHeight = boardGrid.height;

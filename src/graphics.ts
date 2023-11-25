@@ -4,6 +4,7 @@ import { boardGridX, boardGridY } from "./main";
 export const drawHexagon = (
   startingPoints: { x: number; y: number },
   playerSprite: PIXI.Sprite,
+  size = 50,
 ) => {
   const { x, y } = startingPoints;
   // Create a Graphics object
@@ -12,9 +13,6 @@ export const drawHexagon = (
   // Set the fill color and line style
   graphics.beginFill(0xff0000);
   graphics.lineStyle(2, 0x000000);
-
-  // Define the size of the hexagon
-  const size = 50;
 
   // Calculate the points of the hexagon
   const points = [];
@@ -52,8 +50,9 @@ export const drawHexagon = (
     }
   });
   graphics.on("click", () => {
+    const correctionY = playerSprite.height - graphics.height * 0.8;
     playerSprite.x = graphics._bounds.minX + boardGridX;
-    playerSprite.y = graphics._bounds.minY + boardGridY;
+    playerSprite.y = graphics._bounds.minY + boardGridY - correctionY;
   });
 
   return graphics;
@@ -76,7 +75,7 @@ export const drawHexagonBoard = (
   let y = 0;
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
-      const hexagon = drawHexagon({ x, y }, playerSprite);
+      const hexagon = drawHexagon({ x, y }, playerSprite, size);
       grid.addChild(hexagon);
       x += 1.8 * size;
     }
