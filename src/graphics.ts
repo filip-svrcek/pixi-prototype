@@ -54,6 +54,11 @@ export const drawHexagon = (
     playerSprite.x = graphics._bounds.minX + boardGridX;
     playerSprite.y = graphics._bounds.minY + boardGridY - correctionY;
   });
+  graphics.on("tap", () => {
+    const correctionY = playerSprite.height - graphics.height * 0.8;
+    playerSprite.x = graphics._bounds.minX + boardGridX;
+    playerSprite.y = graphics._bounds.minY + boardGridY - correctionY;
+  });
 
   return graphics;
 };
