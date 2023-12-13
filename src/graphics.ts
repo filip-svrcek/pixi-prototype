@@ -1,18 +1,21 @@
 import * as PIXI from "pixi.js";
-import { boardGridX, boardGridY } from "./main";
+import { moveSpriteToHexagon } from "./actions";
 
 export const drawHexagon = (
   startingPoints: { x: number; y: number },
   playerSprite: PIXI.Sprite,
   size = 50,
+  occupants: PIXI.Sprite[] = [],
 ) => {
   const { x, y } = startingPoints;
   // Create a Graphics object
-  const graphics = new PIXI.Graphics();
+  const hexagon = Object.assign(new PIXI.Graphics(), {
+    occupants,
+  });
 
   // Set the fill color and line style
-  graphics.beginFill(0xff0000);
-  graphics.lineStyle(2, 0x000000);
+  hexagon.beginFill(0xff0000);
+  hexagon.lineStyle(2, 0x000000);
 
   // Calculate the points of the hexagon
   const points = [];
@@ -23,51 +26,48 @@ export const drawHexagon = (
     points.push(new PIXI.Point(x, y));
   }
 
-  // Move the graphics object to the starting point
-  graphics.moveTo(points[0].x + x, points[0].y + y);
+  // Move the hexagon object to the starting point
+  hexagon.moveTo(points[0].x + x, points[0].y + y);
 
   // Draw the hexagon by connecting the points
   for (let i = 1; i < 6; i++) {
-    graphics.lineTo(points[i].x + x, points[i].y + y);
+    hexagon.lineTo(points[i].x + x, points[i].y + y);
   }
 
   // Close the shape
-  graphics.lineTo(points[0].x + x, points[0].y + y);
+  hexagon.lineTo(points[0].x + x, points[0].y + y);
 
   // End the fill and line style
-  graphics.endFill();
+  hexagon.endFill();
 
   // Make the hexagon interactive
-  graphics.interactive = true;
-  graphics.on("mouseover", () => {
-    if (graphics.tint !== 0x000000) {
-      graphics.tint = 0x00ff00;
+  hexagon.interactive = true;
+
+  hexagon.on("mouseover", () => {
+    if (hexagon.tint !== 0x000000) {
+      hexagon.tint = 0x00ff00;
     }
   });
-  graphics.on("mouseout", () => {
-    if (graphics.tint !== 0x000000) {
-      graphics.tint = 0xff0000;
+  hexagon.on("mouseout", () => {
+    if (hexagon.tint !== 0x000000) {
+      hexagon.tint = 0xff0000;
     }
   });
-  graphics.on("click", () => {
-    const correctionY = playerSprite.height - graphics.height * 0.8;
-    playerSprite.x = graphics._bounds.minX + boardGridX;
-    playerSprite.y = graphics._bounds.minY + boardGridY - correctionY;
+  hexagon.on("click", () => {
+    moveSpriteToHexagon(playerSprite, hexagon);
   });
-  graphics.on("tap", () => {
-    const correctionY = playerSprite.height - graphics.height * 0.8;
-    playerSprite.x = graphics._bounds.minX + boardGridX;
-    playerSprite.y = graphics._bounds.minY + boardGridY - correctionY;
+  hexagon.on("tap", () => {
+    moveSpriteToHexagon(playerSprite, hexagon);
   });
 
-  return graphics;
+  return hexagon;
 };
 
 export const drawHexagonBoard = (
   map: number[][],
   playerSprite: PIXI.Sprite,
 ) => {
-  const grid = new PIXI.Container();
+  const gridContainer = new PIXI.Container();
   const size = 50;
   const points = [];
   for (let i = 0; i < 6; i++) {
@@ -81,7 +81,7 @@ export const drawHexagonBoard = (
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
       const hexagon = drawHexagon({ x, y }, playerSprite, size);
-      grid.addChild(hexagon);
+      gridContainer.addChild(hexagon);
       x += 1.8 * size;
     }
     if (row % 2 === 0) {
@@ -92,5 +92,5 @@ export const drawHexagonBoard = (
 
     y += 1.6 * size;
   }
-  return grid;
+  return gridContainer;
 };
