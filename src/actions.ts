@@ -7,9 +7,10 @@ export const moveSpriteToHexagon = (
   hexagon: Hexagon,
 ) => {
   if (checkIfHexagonIsOccupied(hexagon)) {
+    console.log("Hexagon is occupied");
     return;
   }
-  hexagon.occupants.push(playerSprite);
+  hexagon.occupant = playerSprite;
 
   const correctionY = playerSprite.height - hexagon.height * 0.8;
   playerSprite.x = hexagon._bounds.minX + boardGridX;
@@ -37,5 +38,5 @@ export const moveSpriteToHexagonByCoordinates = (
 };
 
 const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
-  return hexagon.occupants.length > 0;
+  return !!hexagon.occupant;
 };

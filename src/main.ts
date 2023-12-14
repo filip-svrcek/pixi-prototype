@@ -1,8 +1,9 @@
 import "./style.css";
 import * as PIXI from "pixi.js";
 
-import knight from "./assets/knight/Idle (1).png";
 import { drawHexagonBoard } from "./graphics";
+import { loadCharacterTextures } from "./loader";
+import { spawnPlayerCharacter } from "./spawn";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -16,28 +17,19 @@ const app = new PIXI.Application({
 // can then insert into the DOM
 document.body.appendChild(app.view as unknown as Node);
 
-// load the texture we need
-const texturePlayer = await PIXI.Assets.load(knight);
+const seedMap = [
+  [1, 1, 1, 1, 1],
+  [1, 0, 1, 0, 1, 1],
+  [2, 1, 0, 1, 3],
+  [1, 1, 1, 0, 1, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1],
+];
 
-// This creates a texture
-const player = new PIXI.Sprite(texturePlayer);
+export const loadedTextures = await loadCharacterTextures(seedMap);
+const playerCharacter = spawnPlayerCharacter();
 
-// Setup the position of the player
-player.x = app.renderer.width / 2;
-player.y = app.renderer.height / 2;
-player.scale.set(0.2, 0.2);
-
-const boardGrid = drawHexagonBoard(
-  [
-    [1, 1, 1, 1, 1],
-    [1, 0, 1, 0, 1, 1],
-    [1, 1, 0, 1, 1],
-    [1, 1, 1, 0, 1, 1],
-    [1, 0, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1],
-  ],
-  player,
-);
+const boardGrid = drawHexagonBoard(seedMap, playerCharacter);
 
 const boardGridWidth = boardGrid.width;
 const boardGridHeight = boardGrid.height;
@@ -49,19 +41,7 @@ boardGrid.y = boardGridY;
 
 // Populate the stage
 app.stage.addChild(boardGrid);
-app.stage.addChild(player);
-
-// // Handle keyboard events
-// document.addEventListener("keydown", (e) => handlePressedKeys(e));
-// document.addEventListener("keyup", (e) => handlePressedKeys(e));
-// let pressedKeys: string[] = [];
-// function handlePressedKeys(e: KeyboardEvent) {
-//   if (e.type === "keydown") {
-//     !pressedKeys.includes(e.key) && pressedKeys.push(e.key);
-//   } else {
-//     pressedKeys = pressedKeys.filter((key) => key !== e.key);
-//   }
-// }
+app.stage.addChild(playerCharacter);
 
 // Listen for frame updates
 app.ticker.add(() => {});

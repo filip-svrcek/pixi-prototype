@@ -1,21 +1,23 @@
 import * as PIXI from "pixi.js";
 import { moveSpriteToHexagon } from "./actions";
+import { spawnByIndex } from "./spawn";
 
 export const drawHexagon = (
   startingPoints: { x: number; y: number },
-  playerSprite: PIXI.Sprite,
   size = 50,
-  occupants: PIXI.Sprite[] = [],
+  playerSprite: PIXI.Sprite,
+  hexagonVariant = 1,
 ) => {
   const { x, y } = startingPoints;
   // Create a Graphics object
   const hexagon = Object.assign(new PIXI.Graphics(), {
-    occupants,
+    occupant: hexagonVariant > 2 ? spawnByIndex(hexagonVariant) : null,
   });
 
   // Set the fill color and line style
   hexagon.beginFill(0xff0000);
   hexagon.lineStyle(2, 0x000000);
+  hexagon.alpha = 0.5;
 
   // Calculate the points of the hexagon
   const points = [];
@@ -80,7 +82,7 @@ export const drawHexagonBoard = (
   let y = 0;
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
-      const hexagon = drawHexagon({ x, y }, playerSprite, size);
+      const hexagon = drawHexagon({ x, y }, size, playerSprite, map[row][col]);
       gridContainer.addChild(hexagon);
       x += 1.8 * size;
     }
