@@ -31,17 +31,6 @@ const playerCharacter = createPlayerCharacter(seedMap);
 
 const boardGrid = drawHexagonBoard(seedMap, playerCharacter);
 
-const boardGridWidth = boardGrid.width;
-const boardGridHeight = boardGrid.height;
-export const boardGridX = app.renderer.width / 2 - boardGridWidth / 2;
-export const boardGridY = app.renderer.height / 2 - boardGridHeight / 2;
-
-boardGrid.x = boardGridX;
-boardGrid.y = boardGridY;
-
 // Populate the stage
 app.stage.addChild(boardGrid);
-app.stage.addChild(playerCharacter);
-
-// Listen for frame updates
-app.ticker.add(() => {});
+boardGrid.addChild(playerCharacter);

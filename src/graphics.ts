@@ -1,13 +1,15 @@
 import * as PIXI from "pixi.js";
 import { moveSpriteToHexagon } from "./actions";
+import { CharacterSprite } from "./types";
 
 export const drawHexagon = (
-  startingPoints: { x: number; y: number },
+  drawingStartingPoints: { x: number; y: number },
   size = 50,
-  playerSprite: PIXI.Sprite,
+  playerSprite: CharacterSprite,
   hexagonVariant = 1,
 ) => {
-  const { x, y } = startingPoints;
+  const { x, y } = drawingStartingPoints;
+
   // Create a Graphics object
   const hexagon = Object.assign(new PIXI.Graphics(), {
     variant: hexagonVariant,
@@ -70,7 +72,7 @@ export const drawHexagon = (
 
 export const drawHexagonBoard = (
   map: number[][],
-  playerSprite: PIXI.Sprite,
+  playerSprite: CharacterSprite,
 ) => {
   const gridContainer = new PIXI.Container();
   const size = 50;
@@ -97,5 +99,7 @@ export const drawHexagonBoard = (
 
     y += 1.6 * size;
   }
+  gridContainer.x = 0.5 * window.innerWidth - gridContainer.width / 2;
+  gridContainer.y = 0.5 * window.innerHeight - gridContainer.height / 2;
   return gridContainer;
 };

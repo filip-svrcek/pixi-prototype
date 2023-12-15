@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
 import { Hexagon } from "./types";
-import { boardGridX, boardGridY } from "./main";
 
 export const moveSpriteToHexagon = (
   playerSprite: PIXI.Sprite,
@@ -12,8 +11,8 @@ export const moveSpriteToHexagon = (
   // }
 
   const correctionY = playerSprite.height - hexagon.height * 0.8;
-  playerSprite.x = hexagon._bounds.minX + boardGridX;
-  playerSprite.y = hexagon._bounds.minY + boardGridY - correctionY;
+  playerSprite.x = hexagon._bounds.minX;
+  playerSprite.y = hexagon._bounds.minY - correctionY;
 };
 
 export const moveSpriteToHexagonByIndex = (
