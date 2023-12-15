@@ -27,7 +27,7 @@ const seedMap = [
 ];
 
 export const loadedTextures = await loadCharacterTextures(seedMap);
-const playerCharacter = spawnPlayerCharacter();
+const playerCharacter = spawnPlayerCharacter(seedMap);
 
 const boardGrid = drawHexagonBoard(seedMap, playerCharacter);
 

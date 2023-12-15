@@ -4,13 +4,12 @@ import { boardGridX, boardGridY } from "./main";
 
 export const moveSpriteToHexagon = (
   playerSprite: PIXI.Sprite,
-  hexagon: Hexagon,
+  hexagon: PIXI.Graphics,
 ) => {
-  if (checkIfHexagonIsOccupied(hexagon)) {
-    console.log("Hexagon is occupied");
-    return;
-  }
-  hexagon.occupant = playerSprite;
+  // if (checkIfHexagonIsOccupied(hexagon)) {
+  //   console.log("Hexagon is occupied");
+  //   return;
+  // }
 
   const correctionY = playerSprite.height - hexagon.height * 0.8;
   playerSprite.x = hexagon._bounds.minX + boardGridX;
@@ -37,6 +36,7 @@ export const moveSpriteToHexagonByCoordinates = (
   moveSpriteToHexagonByIndex(playerSprite, hexagons, index);
 };
 
-const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
-  return !!hexagon.occupant;
-};
+// const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
+//   // change
+//   return !!hexagon.occupant;
+// };
