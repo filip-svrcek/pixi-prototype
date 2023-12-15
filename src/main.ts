@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 
 import { drawHexagonBoard } from "./graphics";
 import { loadCharacterTextures } from "./loader";
-import { spawnPlayerCharacter } from "./spawn";
+import { createPlayerCharacter } from "./spawn";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -27,7 +27,7 @@ const seedMap = [
 ];
 
 export const loadedTextures = await loadCharacterTextures(seedMap);
-const playerCharacter = spawnPlayerCharacter(seedMap);
+const playerCharacter = createPlayerCharacter(seedMap);
 
 const boardGrid = drawHexagonBoard(seedMap, playerCharacter);
 

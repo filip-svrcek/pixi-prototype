@@ -17,7 +17,7 @@ const findCharacterCoordinatesFromSeedMap = (
   return null;
 };
 
-export const spawnPlayerCharacter = (seedMap: SeedMap) => {
+export const createPlayerCharacter = (seedMap: SeedMap) => {
   const playerCharacterCoordinates = findCharacterCoordinatesFromSeedMap(
     seedMap,
     2,
