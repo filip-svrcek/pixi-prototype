@@ -4,6 +4,8 @@ import * as PIXI from "pixi.js";
 import { drawHexagonBoard } from "./graphics";
 import { loadCharacterTextures } from "./loader";
 import { createPlayerCharacter } from "./spawn";
+import { moveSpriteToHexagon } from "./actions";
+import { Hexagon } from "./types";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -34,3 +36,10 @@ const boardGrid = drawHexagonBoard(seedMap, playerCharacter);
 // Populate the stage
 app.stage.addChild(boardGrid);
 boardGrid.addChild(playerCharacter);
+
+if (playerCharacter.gridIndexPosition) {
+  moveSpriteToHexagon(
+    playerCharacter,
+    boardGrid.children[playerCharacter.gridIndexPosition] as Hexagon,
+  );
+}

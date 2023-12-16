@@ -19,7 +19,7 @@ export type CharacterSprite = PIXI.Sprite & {
   // type: string;
   // id: string;
   // owner: string;
-  gridIndexPosition: { x: number; y: number } | null;
+  gridIndexPosition: number | null;
   // index: number;
   // selected: boolean;
   // tint: number;
