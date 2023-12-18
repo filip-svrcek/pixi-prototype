@@ -2,10 +2,10 @@ import "./style.css";
 import * as PIXI from "pixi.js";
 
 import { drawHexagonBoard } from "./graphics";
-import { loadCharacterTextures } from "./loader";
-import { createNonPlayerCharacters, createPlayerCharacter } from "./spawn";
 import { moveSpriteToHexagon } from "./actions";
 import { Hexagon } from "./types";
+import { loadSpriteSheets } from "./loader";
+import { createNonPlayerCharacters, createPlayerCharacter } from "./spawn";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render.
@@ -26,7 +26,7 @@ const seedMap = [
   [1, 1, 1, 1, 1, 3],
 ];
 
-export const loadedTextures = await loadCharacterTextures(seedMap);
+export const loadedSpriteSheets = await loadSpriteSheets(seedMap);
 const playerCharacter = createPlayerCharacter(seedMap);
 const nonPlayerCharacters = createNonPlayerCharacters(seedMap);
 

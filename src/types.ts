@@ -6,7 +6,7 @@ export type Hexagon = PIXI.Graphics & {
 
 export type SeedMap = number[][];
 
-export type CharacterSprite = PIXI.Sprite & {
+export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   // health: number;
   // attack: number;
   // defense: number;
@@ -25,4 +25,32 @@ export type CharacterSprite = PIXI.Sprite & {
   // tint: number;
   // alpha: number;
   // _bounds: PIXI.Rectangle;
+};
+
+export type SpriteSheet = {
+  frames: {
+    [key: string]: {
+      frame: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+      };
+      rotated: boolean;
+      trimmed: boolean;
+      spriteSourceSize: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+      };
+      sourceSize: {
+        w: number;
+        h: number;
+      };
+    };
+  };
+  animations: {
+    [key: string]: PIXI.Texture[];
+  };
 };

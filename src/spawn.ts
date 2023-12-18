@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 
-import { loadedTextures } from "./main";
-import { CharacterSprite, SeedMap } from "./types";
+import { CharacterAnimatedSprite, SeedMap } from "./types";
+import { loadedSpriteSheets } from "./main";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
-  const player: CharacterSprite = Object.assign(
-    new PIXI.Sprite(loadedTextures[0]),
+  const player: CharacterAnimatedSprite = Object.assign(
+    new PIXI.AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
     {
       gridIndexPosition: seedMap
         .flat()
@@ -13,24 +13,26 @@ export const createPlayerCharacter = (seedMap: SeedMap) => {
         .indexOf(2),
     },
   );
-  player.scale.set(0.2, 0.2);
+  player.animationSpeed = 0.4;
+  player.play();
 
   return player;
 };
 
 export const createNonPlayerCharacters = (seedMap: SeedMap) => {
   const usableHexagons = seedMap.flat().filter((el) => el > 0);
-  let npcArray: CharacterSprite[] = [];
+  let npcArray: CharacterAnimatedSprite[] = [];
 
   usableHexagons.forEach((el, index) => {
     if (el > 2) {
-      const nonPlayer: CharacterSprite = Object.assign(
-        new PIXI.Sprite(loadedTextures[0]),
+      const nonPlayer: CharacterAnimatedSprite = Object.assign(
+        new PIXI.AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
         {
           gridIndexPosition: index,
         },
       );
-      nonPlayer.scale.set(0.2, 0.2);
+      nonPlayer.animationSpeed = 0.4;
+      nonPlayer.play();
       npcArray.push(nonPlayer);
     }
   });
