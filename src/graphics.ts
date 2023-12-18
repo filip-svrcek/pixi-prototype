@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 import { moveSpriteToHexagon } from "./actions";
-import { CharacterSprite } from "./types";
+import { CharacterAnimatedSprite } from "./types";
 
 export const drawHexagon = (
   drawingStartingPoints: { x: number; y: number },
   size = 50,
-  playerSprite: CharacterSprite,
+  playerSprite: CharacterAnimatedSprite,
   hexagonVariant = 1,
 ) => {
   const { x, y } = drawingStartingPoints;
@@ -72,7 +72,7 @@ export const drawHexagon = (
 
 export const drawHexagonBoard = (
   map: number[][],
-  playerSprite: CharacterSprite,
+  playerSprite: CharacterAnimatedSprite,
 ) => {
   const gridContainer = new PIXI.Container();
   const size = 50;
