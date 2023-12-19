@@ -31,6 +31,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
           gridIndexPosition: index,
         },
       );
+      nonPlayer.scale.x = -1;
       nonPlayer.animationSpeed = 0.4;
       nonPlayer.play();
       npcArray.push(nonPlayer);
