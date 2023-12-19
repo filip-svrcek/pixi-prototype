@@ -1,9 +1,11 @@
 import * as PIXI from "pixi.js";
-import { SeedMap, SpriteSheet } from "./types";
+import { SeedMap } from "./types";
+import knightSpriteSheet from "./assets/knight/knight.json";
+import knightSpriteSheetImage from "./assets/knight/knight.png";
 
-const spriteSheetList: { readonly [key: number]: string } = {
-  2: "src/assets/knight/knight.json",
-  3: "src/assets/knight/knight.json",
+const spriteSheetList: { readonly [key: number]: any } = {
+  2: { json: knightSpriteSheet, image: knightSpriteSheetImage },
+  3: { json: knightSpriteSheet, image: knightSpriteSheetImage },
 } as const;
 // const textureList: { readonly [key: number]: string } = {
 //   4: "src/assets/knight/knight.json",
@@ -25,8 +27,16 @@ export const loadSpriteSheets = async (seedMap: SeedMap) => {
   const loadSpriteSheets = [];
   for (const textureIndex of textureIndexes) {
     if (textureIndex in spriteSheetList) {
-      loadSpriteSheets.push(PIXI.Assets.load(spriteSheetList[textureIndex]));
+      const baseTexture = PIXI.BaseTexture.from(
+        spriteSheetList[textureIndex].image,
+      );
+      const sheet = new PIXI.Spritesheet(
+        baseTexture,
+        spriteSheetList[textureIndex].json,
+      );
+      await sheet.parse();
+      loadSpriteSheets.push(sheet);
     }
   }
-  return Promise.all<SpriteSheet>(loadSpriteSheets);
+  return loadSpriteSheets;
 };

@@ -27,30 +27,30 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   // _bounds: PIXI.Rectangle;
 };
 
-export type SpriteSheet = {
-  frames: {
-    [key: string]: {
-      frame: {
-        x: number;
-        y: number;
-        w: number;
-        h: number;
-      };
-      rotated: boolean;
-      trimmed: boolean;
-      spriteSourceSize: {
-        x: number;
-        y: number;
-        w: number;
-        h: number;
-      };
-      sourceSize: {
-        w: number;
-        h: number;
-      };
-    };
-  };
-  animations: {
-    [key: string]: PIXI.Texture[];
-  };
-};
+// export type SpriteSheet = {
+//   frames: {
+//     [key: string]: {
+//       frame: {
+//         x: number;
+//         y: number;
+//         w: number;
+//         h: number;
+//       };
+//       rotated: boolean;
+//       trimmed: boolean;
+//       spriteSourceSize: {
+//         x: number;
+//         y: number;
+//         w: number;
+//         h: number;
+//       };
+//       sourceSize: {
+//         w: number;
+//         h: number;
+//       };
+//     };
+//   };
+//   animations: {
+//     [key: string]: PIXI.Texture[];
+//   };
+// };
