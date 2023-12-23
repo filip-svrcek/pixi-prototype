@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 
 import { CharacterAnimatedSprite, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
+import { invertSpriteOnX } from "./actions";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
   const player: CharacterAnimatedSprite = Object.assign(
@@ -31,7 +32,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
           gridIndexPosition: index,
         },
       );
-      nonPlayer.scale.x = -1;
+      invertSpriteOnX(nonPlayer)
       nonPlayer.animationSpeed = 0.4;
       nonPlayer.play();
       npcArray.push(nonPlayer);

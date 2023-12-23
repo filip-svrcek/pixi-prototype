@@ -1,8 +1,8 @@
+import { CharacterAnimatedSprite, Hexagon } from "./types";
 import * as PIXI from "pixi.js";
-import { Hexagon } from "./types";
 
 export const moveSpriteToHexagon = (
-  playerSprite: PIXI.Sprite,
+  sprite: CharacterAnimatedSprite,
   hexagon: Hexagon,
 ) => {
   // if (checkIfHexagonIsOccupied(hexagon)) {
@@ -10,12 +10,17 @@ export const moveSpriteToHexagon = (
   //   return;
   // }
 
-  const correctionY = playerSprite.height - hexagon.height * 0.8;
-  playerSprite.x = hexagon._bounds.minX;
-  playerSprite.y = hexagon._bounds.minY - correctionY;
+  const correctionY = sprite.height - hexagon.height * 0.8;
+  sprite.x = hexagon._bounds.minX;
+  sprite.y = hexagon._bounds.minY - correctionY;
 };
 
 // const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
 //   // change
 //   return !!hexagon.occupant;
 // };
+
+export const invertSpriteOnX = (sprite: PIXI.Sprite)=>{
+  sprite.scale.x = -1;
+  sprite.anchor.x = sprite.anchor.x + 1;
+}

@@ -6,6 +6,7 @@ import { moveSpriteToHexagon } from "./actions";
 import { Hexagon } from "./types";
 import { loadSpriteSheets } from "./loader";
 import { createNonPlayerCharacters, createPlayerCharacter } from "./spawn";
+import { drawBoundaries } from "./devTools";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render.
@@ -41,6 +42,7 @@ if (playerCharacter.gridIndexPosition) {
     playerCharacter,
     boardGrid.children[playerCharacter.gridIndexPosition] as Hexagon,
   );
+  process.env.NODE_ENV === "development" && drawBoundaries(playerCharacter);
 }
 
 nonPlayerCharacters.forEach((npc) => {
@@ -50,5 +52,6 @@ nonPlayerCharacters.forEach((npc) => {
       npc,
       boardGrid.children[npc.gridIndexPosition] as Hexagon,
     );
+    process.env.NODE_ENV === "development" && drawBoundaries(npc);
   }
 });
