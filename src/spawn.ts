@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { CharacterAnimatedSprite, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
 import { invertSpriteOnX } from "./actions";
+import { drawBoundaries } from "./devTools";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
   const player: CharacterAnimatedSprite = Object.assign(
@@ -32,7 +33,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
           gridIndexPosition: index,
         },
       );
-      invertSpriteOnX(nonPlayer)
+      invertSpriteOnX(nonPlayer);
       nonPlayer.animationSpeed = 0.4;
       nonPlayer.play();
       npcArray.push(nonPlayer);
@@ -40,4 +41,20 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
   });
 
   return npcArray;
+};
+
+export const spawnCharacters = (
+  characters: CharacterAnimatedSprite[],
+  boardGrid: PIXI.Container,
+) => {
+  characters.forEach((char) => {
+    if (char.gridIndexPosition) {
+      boardGrid.addChild(char);
+      const hexagon = boardGrid.children[char.gridIndexPosition] as PIXI.Sprite;
+      const correctionY = char.height - hexagon.height * 0.8;
+      char.x = hexagon._bounds.minX;
+      char.y = hexagon._bounds.minY - correctionY;
+      process.env.NODE_ENV === "development" && drawBoundaries(char);
+    }
+  });
 };

@@ -1,3 +1,4 @@
+import { loadedSpriteSheets } from "./main";
 import { CharacterAnimatedSprite, Hexagon } from "./types";
 import * as PIXI from "pixi.js";
 
@@ -9,6 +10,12 @@ export const moveSpriteToHexagon = (
   //   console.log("Hexagon is occupied");
   //   return;
   // }
+  sprite.textures = loadedSpriteSheets[0].animations["walk"];
+  sprite.play();
+  setTimeout(() => {
+    sprite.textures = loadedSpriteSheets[0].animations["idle"];
+    sprite.play();
+  }, 1000);
 
   const correctionY = sprite.height - hexagon.height * 0.8;
   sprite.x = hexagon._bounds.minX;
@@ -20,7 +27,7 @@ export const moveSpriteToHexagon = (
 //   return !!hexagon.occupant;
 // };
 
-export const invertSpriteOnX = (sprite: PIXI.Sprite)=>{
+export const invertSpriteOnX = (sprite: PIXI.Sprite) => {
   sprite.scale.x = -1;
   sprite.anchor.x = sprite.anchor.x + 1;
-}
+};

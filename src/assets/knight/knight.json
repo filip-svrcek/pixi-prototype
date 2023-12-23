@@ -503,6 +503,78 @@
       "Idle (8).png",
       "Idle (9).png",
       "Idle (10).png"
+    ],
+    "run": [
+      "Run (1).png",
+      "Run (2).png",
+      "Run (3).png",
+      "Run (4).png",
+      "Run (5).png",
+      "Run (6).png",
+      "Run (7).png",
+      "Run (8).png",
+      "Run (9).png",
+      "Run (10).png"
+    ],
+    "jump": [
+      "Jump (1).png",
+      "Jump (2).png",
+      "Jump (3).png",
+      "Jump (4).png",
+      "Jump (5).png",
+      "Jump (6).png",
+      "Jump (7).png",
+      "Jump (8).png",
+      "Jump (9).png",
+      "Jump (10).png"
+    ],
+    "jumpAttack": [
+      "JumpAttack (1).png",
+      "JumpAttack (2).png",
+      "JumpAttack (3).png",
+      "JumpAttack (4).png",
+      "JumpAttack (5).png",
+      "JumpAttack (6).png",
+      "JumpAttack (7).png",
+      "JumpAttack (8).png",
+      "JumpAttack (9).png",
+      "JumpAttack (10).png"
+    ],
+    "attack": [
+      "Attack (1).png",
+      "Attack (2).png",
+      "Attack (3).png",
+      "Attack (4).png",
+      "Attack (5).png",
+      "Attack (6).png",
+      "Attack (7).png",
+      "Attack (8).png",
+      "Attack (9).png",
+      "Attack (10).png"
+    ],
+    "dead": [
+      "Dead (1).png",
+      "Dead (2).png",
+      "Dead (3).png",
+      "Dead (4).png",
+      "Dead (5).png",
+      "Dead (6).png",
+      "Dead (7).png",
+      "Dead (8).png",
+      "Dead (9).png",
+      "Dead (10).png"
+    ],
+    "walk": [
+      "Walk (1).png",
+      "Walk (2).png",
+      "Walk (3).png",
+      "Walk (4).png",
+      "Walk (5).png",
+      "Walk (6).png",
+      "Walk (7).png",
+      "Walk (8).png",
+      "Walk (9).png",
+      "Walk (10).png"
     ]
   },
   "meta": {
