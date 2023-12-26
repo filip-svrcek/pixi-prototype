@@ -13,6 +13,7 @@ export const drawHexagon = (
   // Create a Graphics object
   const hexagon = Object.assign(new PIXI.Graphics(), {
     variant: hexagonVariant,
+    hexagonPivot: { x: 45, y: 75 },
   });
 
   if (hexagonVariant === 0) {

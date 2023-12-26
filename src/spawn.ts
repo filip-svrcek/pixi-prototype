@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
 
-import { CharacterAnimatedSprite, SeedMap } from "./types";
+import { CharacterAnimatedSprite, Hexagon, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
-import { invertSpriteOnX } from "./actions";
-import { drawBoundaries } from "./devTools";
+import { alignCharacterSpriteAndHexagonPivots, invertCharacterSpriteOnX } from "./actions";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
   const player: CharacterAnimatedSprite = Object.assign(
@@ -13,6 +12,7 @@ export const createPlayerCharacter = (seedMap: SeedMap) => {
         .flat()
         .filter((el) => el > 0)
         .indexOf(2),
+      texturePivot: { x: 45, y: 130 },
     },
   );
   player.animationSpeed = 0.4;
@@ -31,9 +31,10 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
         new PIXI.AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
         {
           gridIndexPosition: index,
+          texturePivot: { x: 45, y: 130 },
         },
       );
-      invertSpriteOnX(nonPlayer);
+      invertCharacterSpriteOnX(nonPlayer);
       nonPlayer.animationSpeed = 0.4;
       nonPlayer.play();
       npcArray.push(nonPlayer);
@@ -50,11 +51,24 @@ export const spawnCharacters = (
   characters.forEach((char) => {
     if (char.gridIndexPosition) {
       boardGrid.addChild(char);
-      const hexagon = boardGrid.children[char.gridIndexPosition] as PIXI.Sprite;
-      const correctionY = char.height - hexagon.height * 0.8;
-      char.x = hexagon._bounds.minX;
-      char.y = hexagon._bounds.minY - correctionY;
-      process.env.NODE_ENV === "development" && drawBoundaries(char);
+      const hexagon = boardGrid.children[char.gridIndexPosition] as Hexagon;
+      alignCharacterSpriteAndHexagonPivots(char, hexagon);
+
+      // devDrawPoint(
+      //   hexagon._bounds.minX+ hexagon.hexagonPivot.x,
+      //   hexagon._bounds.minY + hexagon.hexagonPivot.y,
+      //   hexagon.parent,
+      //   "blue",
+      // );
+      // devDrawPoint(hexagon._bounds.minX, hexagon._bounds.minY, hexagon.parent);
+      // devDrawBoundariesFromBounds(hexagon, "purple");
+      // devDrawPoint(
+      //   hexagon._bounds.minX,
+      //   hexagon._bounds.maxY,
+      //   hexagon.parent,
+      //   "yellow",
+      // );
+      // devDrawBoundariesFromCoords(char);
     }
   });
 };

@@ -1,6 +1,5 @@
 import { loadedSpriteSheets } from "./main";
 import { CharacterAnimatedSprite, Hexagon } from "./types";
-import * as PIXI from "pixi.js";
 
 export const moveSpriteToHexagon = (
   sprite: CharacterAnimatedSprite,
@@ -17,9 +16,7 @@ export const moveSpriteToHexagon = (
     sprite.play();
   }, 1000);
 
-  const correctionY = sprite.height - hexagon.height * 0.8;
-  sprite.x = hexagon._bounds.minX;
-  sprite.y = hexagon._bounds.minY - correctionY;
+  alignCharacterSpriteAndHexagonPivots(sprite, hexagon)
 };
 
 // const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
@@ -27,7 +24,15 @@ export const moveSpriteToHexagon = (
 //   return !!hexagon.occupant;
 // };
 
-export const invertSpriteOnX = (sprite: PIXI.Sprite) => {
+export const invertCharacterSpriteOnX = (sprite: CharacterAnimatedSprite) => {
   sprite.scale.x = -1;
   sprite.anchor.x = sprite.anchor.x + 1;
+  sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
+};
+
+export const alignCharacterSpriteAndHexagonPivots = (sprite: CharacterAnimatedSprite, hexagon: Hexagon) => {
+  const correctionX = hexagon.hexagonPivot.x - sprite.texturePivot.x;
+  const correctionY = hexagon.hexagonPivot.y - sprite.texturePivot.y;
+  sprite.x = hexagon._bounds.minX + correctionX;
+  sprite.y = hexagon._bounds.minY + correctionY;
 };

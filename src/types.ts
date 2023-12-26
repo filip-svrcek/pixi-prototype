@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 
 export type Hexagon = PIXI.Graphics & {
   variant: number;
+  hexagonPivot: { x: number; y: number };
 };
 
 export type SeedMap = number[][];
@@ -20,6 +21,7 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   // id: string;
   // owner: string;
   gridIndexPosition: number | null;
+  texturePivot: { x: number; y: number };
   // index: number;
   // selected: boolean;
   // tint: number;
