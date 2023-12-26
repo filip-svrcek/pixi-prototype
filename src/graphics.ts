@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { moveSpriteToHexagon } from "./actions";
+import { moveSpriteToHexagon } from "./movement";
 import { CharacterAnimatedSprite } from "./types";
 
 export const drawHexagon = (

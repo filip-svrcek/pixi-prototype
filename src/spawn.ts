@@ -2,7 +2,10 @@ import * as PIXI from "pixi.js";
 
 import { CharacterAnimatedSprite, Hexagon, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
-import { alignCharacterSpriteAndHexagonPivots, invertCharacterSpriteOnX } from "./actions";
+import {
+  alignCharacterSpriteAndHexagonPivots,
+  invertCharacterSpriteOnX,
+} from "./movement";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
   const player: CharacterAnimatedSprite = Object.assign(

@@ -16,7 +16,7 @@ export const moveSpriteToHexagon = (
     sprite.play();
   }, 1000);
 
-  alignCharacterSpriteAndHexagonPivots(sprite, hexagon)
+  alignCharacterSpriteAndHexagonPivots(sprite, hexagon);
 };
 
 // const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
@@ -30,7 +30,10 @@ export const invertCharacterSpriteOnX = (sprite: CharacterAnimatedSprite) => {
   sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
 };
 
-export const alignCharacterSpriteAndHexagonPivots = (sprite: CharacterAnimatedSprite, hexagon: Hexagon) => {
+export const alignCharacterSpriteAndHexagonPivots = (
+  sprite: CharacterAnimatedSprite,
+  hexagon: Hexagon,
+) => {
   const correctionX = hexagon.hexagonPivot.x - sprite.texturePivot.x;
   const correctionY = hexagon.hexagonPivot.y - sprite.texturePivot.y;
   sprite.x = hexagon._bounds.minX + correctionX;
