@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { Hexagon } from "./types";
 
 export const devDrawBoundariesFromCoords = (object: any, color = "white") => {
   if (process.env.NODE_ENV !== "development") {
@@ -42,4 +43,18 @@ export const devDrawPoint = (
   graphics.drawCircle(x, y, 5);
   graphics.endFill();
   parent.addChild(graphics);
+};
+
+export const devDrawHexagonCoordsText = (hexagon: Hexagon) => {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+  const { x, y } = hexagon.hexagonGridCoords;
+  const text = new PIXI.Text(`${x}, ${y}`, {
+    fontSize: 10,
+    fill: "white",
+  });
+  text.x = hexagon._bounds.minX + 20;
+  text.y = hexagon._bounds.minY + 20;
+  hexagon.addChild(text);
 };

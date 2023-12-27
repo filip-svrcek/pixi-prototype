@@ -16,6 +16,7 @@ export const createPlayerCharacter = (seedMap: SeedMap) => {
         .filter((el) => el > 0)
         .indexOf(2),
       texturePivot: { x: 45, y: 130 },
+      hexagon: null,
     },
   );
   player.animationSpeed = 0.4;
@@ -35,6 +36,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
         {
           gridIndexPosition: index,
           texturePivot: { x: 45, y: 130 },
+          hexagon: null,
         },
       );
       invertCharacterSpriteOnX(nonPlayer);
@@ -55,6 +57,7 @@ export const spawnCharacters = (
     if (char.gridIndexPosition) {
       boardGrid.addChild(char);
       const hexagon = boardGrid.children[char.gridIndexPosition] as Hexagon;
+      char.hexagon = hexagon;
       alignCharacterSpriteAndHexagonPivots(char, hexagon);
 
       // devDrawPoint(

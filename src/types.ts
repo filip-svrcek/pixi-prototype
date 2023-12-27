@@ -21,7 +21,8 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   // type: string;
   // id: string;
   // owner: string;
-  gridIndexPosition: number | null;
+  gridIndexPosition: number;
+  hexagon: Hexagon | null;
   texturePivot: { x: number; y: number };
   // index: number;
   // selected: boolean;
