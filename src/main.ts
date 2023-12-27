@@ -9,6 +9,8 @@ import {
   spawnCharacters,
 } from "./spawn";
 import { moveSpriteToHexagon } from "./movement";
+import { devDrawHexagonCoordsText } from "./devTools";
+import { getHexagonsFromBoard } from "./utils";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render.
@@ -46,4 +48,8 @@ boardGrid.children.forEach((hexagon) => {
   hexagon.on("tap", () => {
     moveSpriteToHexagon(playerCharacter, hexagon);
   });
+});
+
+getHexagonsFromBoard(boardGrid).forEach((hexagon) => {
+  devDrawHexagonCoordsText(hexagon);
 });

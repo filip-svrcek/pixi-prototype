@@ -1,3 +1,6 @@
+import * as PIXI from "pixi.js";
+import { Hexagon } from "./types";
+
 export const areObjectsEqual = (obj1: any, obj2: any) => {
   // Get the keys of both objects
   const keys1 = Object.keys(obj1);
@@ -23,4 +26,14 @@ export const areObjectsEqual = (obj1: any, obj2: any) => {
 
   // If all checks pass, the objects are equal
   return true;
+};
+
+export const getHexagonsFromBoard = (board: PIXI.Container) => {
+  const hexagons: Hexagon[] = [];
+  board.children.forEach((el: any) => {
+    if (Object.hasOwnProperty.call(el, "hexagonGridCoords")) {
+      hexagons.push(el);
+    }
+  });
+  return hexagons;
 };

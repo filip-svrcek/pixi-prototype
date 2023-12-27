@@ -50,8 +50,8 @@ export const devDrawHexagonCoordsText = (hexagon: Hexagon) => {
     return;
   }
   const { x, y } = hexagon.hexagonGridCoords;
-  const text = new PIXI.Text(`${x}, ${y}`, {
-    fontSize: 10,
+  const text = new PIXI.Text(`${x},${y}`, {
+    fontSize: 15,
     fill: "white",
   });
   text.x = hexagon._bounds.minX + 20;
