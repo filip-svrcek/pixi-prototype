@@ -1,11 +1,9 @@
 import * as PIXI from "pixi.js";
-import { moveSpriteToHexagon } from "./movement";
-import { CharacterAnimatedSprite } from "./types";
+import { Hexagon } from "./types";
 
 export const drawHexagon = (
   drawingStartingPoints: { x: number; y: number },
   size = 50,
-  playerSprite: CharacterAnimatedSprite,
   hexagonVariant = 1,
   hexagonGridCoords: { x: number; y: number },
 ) => {
@@ -63,20 +61,11 @@ export const drawHexagon = (
       hexagon.tint = 0xff0000;
     }
   });
-  hexagon.on("click", () => {
-    moveSpriteToHexagon(playerSprite, hexagon);
-  });
-  hexagon.on("tap", () => {
-    moveSpriteToHexagon(playerSprite, hexagon);
-  });
 
   return hexagon;
 };
 
-export const drawHexagonBoard = (
-  map: number[][],
-  playerSprite: CharacterAnimatedSprite,
-) => {
+export const drawHexagonBoard = (map: number[][]) => {
   const gridContainer = new PIXI.Container();
   const size = 50;
   const points = [];
@@ -90,7 +79,7 @@ export const drawHexagonBoard = (
   let y = 0;
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
-      const hexagon = drawHexagon({ x, y }, size, playerSprite, map[row][col], {
+      const hexagon = drawHexagon({ x, y }, size, map[row][col], {
         x: col,
         y: row,
       });
@@ -107,5 +96,5 @@ export const drawHexagonBoard = (
   }
   gridContainer.x = 0.5 * window.innerWidth - gridContainer.width / 2;
   gridContainer.y = 0.5 * window.innerHeight - gridContainer.height / 2;
-  return gridContainer;
+  return gridContainer as PIXI.Container<Hexagon>;
 };
