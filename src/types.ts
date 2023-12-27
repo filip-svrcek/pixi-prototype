@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 export type Hexagon = PIXI.Graphics & {
   variant: number;
   hexagonPivot: { x: number; y: number };
+  hexagonGridCoords: { x: number; y: number };
 };
 
 export type SeedMap = number[][];

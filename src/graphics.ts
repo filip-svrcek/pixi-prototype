@@ -7,6 +7,7 @@ export const drawHexagon = (
   size = 50,
   playerSprite: CharacterAnimatedSprite,
   hexagonVariant = 1,
+  hexagonGridCoords: { x: number; y: number },
 ) => {
   const { x, y } = drawingStartingPoints;
 
@@ -14,6 +15,7 @@ export const drawHexagon = (
   const hexagon = Object.assign(new PIXI.Graphics(), {
     variant: hexagonVariant,
     hexagonPivot: { x: 45, y: 75 },
+    hexagonGridCoords,
   });
 
   if (hexagonVariant === 0) {
@@ -88,7 +90,10 @@ export const drawHexagonBoard = (
   let y = 0;
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
-      const hexagon = drawHexagon({ x, y }, size, playerSprite, map[row][col]);
+      const hexagon = drawHexagon({ x, y }, size, playerSprite, map[row][col], {
+        x: col,
+        y: row,
+      });
       hexagon && gridContainer.addChild(hexagon);
       x += 1.8 * size;
     }
