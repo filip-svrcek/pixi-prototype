@@ -11,7 +11,7 @@ export const moveSpriteToHexagon = (
   //   return;
   // }
 
-  const path = dijkstraHexGrid(sprite.hexagon!, hexagon);
+  const path = getPathToHexagon(sprite.hexagon!, hexagon);
   movementAnimationOnPath(sprite, path);
   sprite.hexagon = hexagon;
 };
@@ -37,7 +37,7 @@ export const alignCharacterSpriteAndHexagonPivots = (
   sprite.y = hexagon._bounds.minY + correctionY;
 };
 
-const dijkstraHexGrid = (startHexagon: Hexagon, endHexagon: Hexagon) => {
+const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
   const startNode = startHexagon;
   const endNode = endHexagon;
   Object.assign(startNode, {
