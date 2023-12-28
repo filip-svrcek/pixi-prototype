@@ -27,14 +27,16 @@ export const invertCharacterSpriteOnX = (sprite: CharacterAnimatedSprite) => {
   sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
 };
 
-export const alignCharacterSpriteAndHexagonPivots = (
+export const getCoordsToAlignCharacterSpriteAndHexagonPivots = (
   sprite: CharacterAnimatedSprite,
   hexagon: Hexagon,
 ) => {
   const correctionX = hexagon.hexagonPivot.x - sprite.texturePivot.x;
   const correctionY = hexagon.hexagonPivot.y - sprite.texturePivot.y;
-  sprite.x = hexagon._bounds.minX + correctionX;
-  sprite.y = hexagon._bounds.minY + correctionY;
+  return {
+    x: hexagon._bounds.minX + correctionX,
+    y: hexagon._bounds.minY + correctionY,
+  };
 };
 
 const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
@@ -103,12 +105,27 @@ const movementAnimationOnPath = (
   sprite.play();
 
   path.forEach((hexagon, index) => {
+    const { x: endX, y: endY } =
+      getCoordsToAlignCharacterSpriteAndHexagonPivots(sprite, hexagon);
+    const { x: startX, y: startY } = sprite.position;
+
+    const rate = 100;
+    const xDiff = startX - endX;
+    const yDiff = startY - endY;
+    const xStep = xDiff / rate;
+    const yStep = yDiff / rate;
+    const interval = setInterval(() => {
+      sprite.position.set(sprite.position.x - xStep, sprite.position.y - yStep);
+    }, 10);
     setTimeout(() => {
-      alignCharacterSpriteAndHexagonPivots(sprite, hexagon);
+      clearInterval(interval);
     }, 1000 * index);
   });
-  setTimeout(() => {
-    sprite.textures = loadedSpriteSheets[0].animations["idle"];
-    sprite.play();
-  }, 1000 * path.length);
+  setTimeout(
+    () => {
+      sprite.textures = loadedSpriteSheets[0].animations["idle"];
+      sprite.play();
+    },
+    1000 * (path.length - 1),
+  );
 };

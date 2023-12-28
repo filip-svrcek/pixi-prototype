@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import { CharacterAnimatedSprite, Hexagon, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
 import {
-  alignCharacterSpriteAndHexagonPivots,
+  getCoordsToAlignCharacterSpriteAndHexagonPivots,
   invertCharacterSpriteOnX,
 } from "./movement";
 
@@ -58,7 +58,11 @@ export const spawnCharacters = (
       boardGrid.addChild(char);
       const hexagon = boardGrid.children[char.gridIndexPosition] as Hexagon;
       char.hexagon = hexagon;
-      alignCharacterSpriteAndHexagonPivots(char, hexagon);
+      const { x, y } = getCoordsToAlignCharacterSpriteAndHexagonPivots(
+        char,
+        hexagon,
+      );
+      char.position.set(x, y);
 
       // devDrawPoint(
       //   hexagon._bounds.minX+ hexagon.hexagonPivot.x,
