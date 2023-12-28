@@ -4,6 +4,8 @@ export type Hexagon = PIXI.Graphics & {
   variant: number;
   hexagonPivot: { x: number; y: number };
   hexagonGridCoords: { x: number; y: number };
+  neighbors: Hexagon[];
+  tempPathCalc?: { cost: number; previous: Hexagon | null; visited: boolean };
 };
 
 export type SeedMap = number[][];

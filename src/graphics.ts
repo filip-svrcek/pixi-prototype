@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Hexagon } from "./types";
+import { assignHexagonNeighbors } from "./utils";
 
 export const drawHexagon = (
   drawingStartingPoints: { x: number; y: number },
@@ -96,5 +97,6 @@ export const drawHexagonBoard = (map: number[][]) => {
   }
   gridContainer.x = 0.5 * window.innerWidth - gridContainer.width / 2;
   gridContainer.y = 0.5 * window.innerHeight - gridContainer.height / 2;
+  assignHexagonNeighbors(gridContainer.children as Hexagon[]);
   return gridContainer as PIXI.Container<Hexagon>;
 };

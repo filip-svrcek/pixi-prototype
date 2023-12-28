@@ -37,3 +37,21 @@ export const getHexagonsFromBoard = (board: PIXI.Container) => {
   });
   return hexagons;
 };
+
+export const assignHexagonNeighbors = (hexagons: Hexagon[]) => {
+  hexagons.forEach((hexagon) => {
+    const { x, y } = hexagon.hexagonGridCoords;
+    const neighbors = hexagons.filter((el) => {
+      const { x: neighborX, y: neighborY } = el.hexagonGridCoords;
+      return (
+        (x === neighborX && y === neighborY - 1) ||
+        (x === neighborX && y === neighborY + 1) ||
+        (x === neighborX + 1 && y === neighborY) ||
+        (x === neighborX + 1 && y === neighborY + 1) ||
+        (x === neighborX - 1 && y === neighborY - 1) ||
+        (x === neighborX - 1 && y === neighborY)
+      );
+    });
+    hexagon.neighbors = neighbors;
+  });
+};
