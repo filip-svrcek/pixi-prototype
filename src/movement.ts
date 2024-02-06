@@ -108,82 +108,53 @@ const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
   return path;
 };
 
-const movementAnimationOnPath = (
+const movementAnimationOnPath = async (
   sprite: CharacterAnimatedSprite,
   path: Hexagon[],
 ) => {
+  const timeToNextHexagon = 1000;
+  const framesPerTravelToNextHexagon = 25;
+  const frameTimeToLive = timeToNextHexagon / framesPerTravelToNextHexagon;
+
   sprite.textures = loadedSpriteSheets[0].animations["walk"];
   sprite.play();
 
-  path.forEach((hexagon, index) => {
-    const { x: endX, y: endY } =
-      getCoordsToAlignCharacterSpriteAndHexagonPivots(sprite, hexagon);
-    const { x: startX, y: startY } = sprite.position;
+  for (let i = 0; i < path.length - 1; i++) {
+    // console.log("i", i);
 
-    const rate = 100;
-    const xDiff = startX - endX;
-    const yDiff = startY - endY;
-    const xStep = xDiff / rate;
-    const yStep = yDiff / rate;
+    const initSpriteTexturePivot = sprite.texturePivot;
+    // console.log("initSpriteTexturePivot", initSpriteTexturePivot);
+    const { x: endX, y: endY } =
+      getCoordsToAlignCharacterSpriteAndHexagonPivots(
+        initSpriteTexturePivot,
+        path[i + 1],
+      );
+    const { x: startX, y: startY } = sprite.position;
+    // console.log("start", startX, startY);
+    // console.log(path[i]);
+    // console.log("end", endX, endY);
+    const xStep = (endX - startX) / frameTimeToLive;
+    const yStep = (endY - startY) / frameTimeToLive;
+
+    if (i === 0) {
+      setTimeout(
+        () => {
+          sprite.textures = loadedSpriteSheets[0].animations["idle"];
+          sprite.play();
+        },
+        timeToNextHexagon * (path.length - 1),
+      );
+    }
     const interval = setInterval(() => {
-      sprite.position.set(sprite.position.x - xStep, sprite.position.y - yStep);
-    }, 10);
-    setTimeout(() => {
+      sprite.position.set(sprite.position.x + xStep, sprite.position.y + yStep);
+    }, frameTimeToLive);
+    await timeout(timeToNextHexagon).then(() => {
       clearInterval(interval);
-    }, 1000 * index);
-  });
-  setTimeout(
-    () => {
-      sprite.textures = loadedSpriteSheets[0].animations["idle"];
-      sprite.play();
-    },
-    1000 * (path.length - 1),
-  );
+      sprite.position.set(endX, endY);
+    });
+  }
 };
 
-// const movementAnimationOnPath = (
-//   sprite: CharacterAnimatedSprite,
-//   path: Hexagon[],
-// ) => {
-//   const timeToNextHexagon = 1000;
-//   sprite.textures = loadedSpriteSheets[0].animations["walk"];
-//   sprite.play();
-//   console.log("path", path);
-//   // path.shift();
-//   console.log("path", path.map((el) => el.hexagonGridCoords));
-//   console.log("path", path.map((el) => el._bounds));
-//   for (let i = 0; i < path.length-1; i++) {
-//     const intervalTime = 10;
-//     const rate = timeToNextHexagon / intervalTime;
-//     const initSpriteTexturePivot =	{...sprite.texturePivot};
-//     const { x: endX, y: endY } =
-//         getCoordsToAlignCharacterSpriteAndHexagonPivots(initSpriteTexturePivot,  path[i+1]);
-//     const { x: startX, y: startY } = path[i].hexagonGridCoords;
-//     const xDiff = startX - endX;
-//     const yDiff = startY - endY;
-//     const xStep = xDiff / rate;
-//     const yStep = yDiff / rate;
-
-//     setTimeout(() => {
-//       const interval = setInterval(() => {
-//         console.log("interval", i);
-//         // console.log("init",initSpriteTexturePivot.x, initSpriteTexturePivot.y)
-//         // console.log(sprite.position.x, sprite.position.y)
-
-//         console.log("end",endX, endY);
-//         sprite.position.set(sprite.position.x - xStep, sprite.position.y - yStep);
-//       }, intervalTime);
-//       setTimeout(() => {
-//         clearInterval(interval);
-//       }, timeToNextHexagon);
-//     }
-//     , timeToNextHexagon * (i));
-//   };
-//   setTimeout(
-//     () => {
-//       sprite.textures = loadedSpriteSheets[0].animations["idle"];
-//       sprite.play();
-//     },
-//     timeToNextHexagon * (path.length - 1),
-//   );
-// };
+const timeout = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
