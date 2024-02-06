@@ -59,7 +59,7 @@ export const spawnCharacters = (
       const hexagon = boardGrid.children[char.gridIndexPosition] as Hexagon;
       char.hexagon = hexagon;
       const { x, y } = getCoordsToAlignCharacterSpriteAndHexagonPivots(
-        char,
+        char.texturePivot,
         hexagon,
       );
       char.position.set(x, y);

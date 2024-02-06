@@ -44,14 +44,31 @@ export const assignHexagonNeighbors = (hexagons: Hexagon[]) => {
     const neighbors = hexagons.filter((el) => {
       const { x: neighborX, y: neighborY } = el.hexagonGridCoords;
       return (
-        (x === neighborX && y === neighborY - 1) ||
-        (x === neighborX && y === neighborY + 1) ||
-        (x === neighborX + 1 && y === neighborY) ||
-        (x === neighborX + 1 && y === neighborY + 1) ||
-        (x === neighborX - 1 && y === neighborY - 1) ||
-        (x === neighborX - 1 && y === neighborY)
+        (x === neighborX && y - 1 === neighborY) ||
+        (x === neighborX && y + 1 === neighborY) ||
+        (x + 1 === neighborX && y === neighborY) ||
+        (x - 1 === neighborX && y === neighborY) ||
+        (y % 2 === 0
+          ? (x + 1 === neighborX && y + 1 === neighborY) ||
+            (x + 1 === neighborX && y - 1 === neighborY)
+          : (x - 1 === neighborX && y + 1 === neighborY) ||
+            (x - 1 === neighborX && y - 1 === neighborY))
       );
     });
     hexagon.neighbors = neighbors;
   });
 };
+
+// export const resetHexagonBoard = (board: PIXI.Container) => {
+//   board.children.forEach((el: any) => {
+//     if (Object.hasOwnProperty.call(el, "hexagonGridCoords")) {
+//       el.tint = 0xffffff;
+//     }
+//   });
+// };
+
+// export const colorHexagonPath = (path: Hexagon[]) => {
+//   path.forEach((hexagon) => {
+//     hexagon.tint = 0x555555;
+//   });
+// };

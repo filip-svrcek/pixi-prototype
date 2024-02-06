@@ -1,4 +1,3 @@
-import "./style.css";
 import * as PIXI from "pixi.js";
 
 import { drawHexagonBoard } from "./graphics";

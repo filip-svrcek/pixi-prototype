@@ -10,10 +10,21 @@ export const moveSpriteToHexagon = (
   //   console.log("Hexagon is occupied");
   //   return;
   // }
-
+  // resetHexagonBoard(hexagon.parent);
   const path = getPathToHexagon(sprite.hexagon!, hexagon);
   movementAnimationOnPath(sprite, path);
+  // console.log(
+  //   "path",
+  //   path.map((el) => el.hexagonGridCoords),
+  // );
+  // // movementAnimationOnPath(sprite, path);
+  // const newPosition = getCoordsToAlignCharacterSpriteAndHexagonPivots(
+  //   sprite.texturePivot,
+  //   hexagon,
+  // );
   sprite.hexagon = hexagon;
+  // sprite.position = newPosition;
+  // colorHexagonPath(path);
 };
 
 // const checkIfHexagonIsOccupied = (hexagon: Hexagon) => {
@@ -28,11 +39,11 @@ export const invertCharacterSpriteOnX = (sprite: CharacterAnimatedSprite) => {
 };
 
 export const getCoordsToAlignCharacterSpriteAndHexagonPivots = (
-  sprite: CharacterAnimatedSprite,
+  spriteTexturePivot: { x: number; y: number },
   hexagon: Hexagon,
 ) => {
-  const correctionX = hexagon.hexagonPivot.x - sprite.texturePivot.x;
-  const correctionY = hexagon.hexagonPivot.y - sprite.texturePivot.y;
+  const correctionX = hexagon.hexagonPivot.x - spriteTexturePivot.x;
+  const correctionY = hexagon.hexagonPivot.y - spriteTexturePivot.y;
   return {
     x: hexagon._bounds.minX + correctionX,
     y: hexagon._bounds.minY + correctionY,
@@ -50,15 +61,15 @@ const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
   while (queue.length > 0) {
     queue.sort((a, b) => a.tempPathCalc!.cost - b.tempPathCalc!.cost);
     const currentNode = queue.shift() as Hexagon;
-    console.log("currentNode", currentNode.hexagonGridCoords, currentNode);
-    console.log(
-      "queue",
-      queue.map((el) => el.hexagonGridCoords),
-    );
+    // console.log("currentNode", currentNode.hexagonGridCoords, currentNode);
+    // console.log(
+    //   "queue",
+    //   queue.map((el) => el.hexagonGridCoords),
+    // );
 
     if (currentNode === endNode) {
       // Reached the destination
-      console.log("reached destination");
+      // console.log("reached destination");
       break;
     }
 
@@ -71,11 +82,11 @@ const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
             tempPathCalc: { previous: currentNode, visited: false, cost: null },
           });
         }
-        console.log(neighbor.hexagonGridCoords);
+        // console.log(neighbor.hexagonGridCoords);
         const newCost =
           currentNode.tempPathCalc!.cost + (neighbor.tempPathCalc!.cost ?? 1);
         if (!neighbor.tempPathCalc!.visited) {
-          console.log("pushing", neighbor.hexagonGridCoords);
+          // console.log("pushing", neighbor.hexagonGridCoords);
           neighbor.tempPathCalc!.cost = newCost;
           queue.push(neighbor);
         }
@@ -129,3 +140,50 @@ const movementAnimationOnPath = (
     1000 * (path.length - 1),
   );
 };
+
+// const movementAnimationOnPath = (
+//   sprite: CharacterAnimatedSprite,
+//   path: Hexagon[],
+// ) => {
+//   const timeToNextHexagon = 1000;
+//   sprite.textures = loadedSpriteSheets[0].animations["walk"];
+//   sprite.play();
+//   console.log("path", path);
+//   // path.shift();
+//   console.log("path", path.map((el) => el.hexagonGridCoords));
+//   console.log("path", path.map((el) => el._bounds));
+//   for (let i = 0; i < path.length-1; i++) {
+//     const intervalTime = 10;
+//     const rate = timeToNextHexagon / intervalTime;
+//     const initSpriteTexturePivot =	{...sprite.texturePivot};
+//     const { x: endX, y: endY } =
+//         getCoordsToAlignCharacterSpriteAndHexagonPivots(initSpriteTexturePivot,  path[i+1]);
+//     const { x: startX, y: startY } = path[i].hexagonGridCoords;
+//     const xDiff = startX - endX;
+//     const yDiff = startY - endY;
+//     const xStep = xDiff / rate;
+//     const yStep = yDiff / rate;
+
+//     setTimeout(() => {
+//       const interval = setInterval(() => {
+//         console.log("interval", i);
+//         // console.log("init",initSpriteTexturePivot.x, initSpriteTexturePivot.y)
+//         // console.log(sprite.position.x, sprite.position.y)
+
+//         console.log("end",endX, endY);
+//         sprite.position.set(sprite.position.x - xStep, sprite.position.y - yStep);
+//       }, intervalTime);
+//       setTimeout(() => {
+//         clearInterval(interval);
+//       }, timeToNextHexagon);
+//     }
+//     , timeToNextHexagon * (i));
+//   };
+//   setTimeout(
+//     () => {
+//       sprite.textures = loadedSpriteSheets[0].animations["idle"];
+//       sprite.play();
+//     },
+//     timeToNextHexagon * (path.length - 1),
+//   );
+// };
