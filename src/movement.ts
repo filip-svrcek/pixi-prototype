@@ -120,37 +120,28 @@ const movementAnimationOnPath = async (
   sprite.play();
 
   for (let i = 0; i < path.length - 1; i++) {
-    // console.log("i", i);
-
     const initSpriteTexturePivot = sprite.texturePivot;
-    // console.log("initSpriteTexturePivot", initSpriteTexturePivot);
     const { x: endX, y: endY } =
       getCoordsToAlignCharacterSpriteAndHexagonPivots(
         initSpriteTexturePivot,
         path[i + 1],
       );
     const { x: startX, y: startY } = sprite.position;
-    // console.log("start", startX, startY);
-    // console.log(path[i]);
-    // console.log("end", endX, endY);
     const xStep = (endX - startX) / frameTimeToLive;
     const yStep = (endY - startY) / frameTimeToLive;
 
-    if (i === 0) {
-      setTimeout(
-        () => {
-          sprite.textures = loadedSpriteSheets[0].animations["idle"];
-          sprite.play();
-        },
-        timeToNextHexagon * (path.length - 1),
-      );
-    }
     const interval = setInterval(() => {
       sprite.position.set(sprite.position.x + xStep, sprite.position.y + yStep);
     }, frameTimeToLive);
-    await timeout(timeToNextHexagon).then(() => {
+
+    const magicalDelayRate = 1.6;
+    await timeout(timeToNextHexagon * magicalDelayRate).then(() => {
       clearInterval(interval);
       sprite.position.set(endX, endY);
+      if (i === path.length - 2) {
+        sprite.textures = loadedSpriteSheets[0].animations["idle"];
+        sprite.play();
+      }
     });
   }
 };
