@@ -26,6 +26,7 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   gridIndexPosition: number;
   hexagon: Hexagon | null;
   texturePivot: { x: number; y: number };
+  facingDirection: "left" | "right";
   // index: number;
   // selected: boolean;
   // tint: number;

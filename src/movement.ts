@@ -32,10 +32,42 @@ export const moveSpriteToHexagon = (
 //   return !!hexagon.occupant;
 // };
 
-export const invertCharacterSpriteOnX = (sprite: CharacterAnimatedSprite) => {
-  sprite.scale.x = -1;
-  sprite.anchor.x = sprite.anchor.x + 1;
-  sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
+export const invertCharacterSpriteOnXToFaceLeft = (
+  sprite: CharacterAnimatedSprite,
+  hexagonStoodAt?: Hexagon | null,
+) => {
+  if (sprite.facingDirection === "right") {
+    sprite.scale.x = -1;
+    sprite.anchor.x = sprite.anchor.x + 1;
+    sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
+    sprite.facingDirection = "left";
+    if (hexagonStoodAt) {
+      const { x, y } = getCoordsToAlignCharacterSpriteAndHexagonPivots(
+        sprite.texturePivot,
+        hexagonStoodAt,
+      );
+      sprite.position.set(x, y);
+    }
+  }
+};
+
+export const invertCharacterSpriteOnXToFaceRight = (
+  sprite: CharacterAnimatedSprite,
+  hexagonStoodAt?: Hexagon | null,
+) => {
+  if (sprite.facingDirection === "left") {
+    sprite.scale.x = 1;
+    sprite.anchor.x = 0;
+    sprite.texturePivot.x = sprite.width - sprite.texturePivot.x;
+    sprite.facingDirection = "right";
+    if (hexagonStoodAt) {
+      const { x, y } = getCoordsToAlignCharacterSpriteAndHexagonPivots(
+        sprite.texturePivot,
+        hexagonStoodAt,
+      );
+      sprite.position.set(x, y);
+    }
+  }
 };
 
 export const getCoordsToAlignCharacterSpriteAndHexagonPivots = (
@@ -108,6 +140,19 @@ const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
   return path;
 };
 
+const faceCorrectDirectionOnPath = (
+  sprite: CharacterAnimatedSprite,
+  hexagonCurrent: Hexagon,
+  hexagonNext: Hexagon,
+) => {
+  if (hexagonNext.hexagonGridCoords.x > hexagonCurrent.hexagonGridCoords.x) {
+    invertCharacterSpriteOnXToFaceRight(sprite);
+  }
+  if (hexagonNext.hexagonGridCoords.x < hexagonCurrent.hexagonGridCoords.x) {
+    invertCharacterSpriteOnXToFaceLeft(sprite);
+  }
+};
+
 const movementAnimationOnPath = async (
   sprite: CharacterAnimatedSprite,
   path: Hexagon[],
@@ -120,6 +165,8 @@ const movementAnimationOnPath = async (
   sprite.play();
 
   for (let i = 0; i < path.length - 1; i++) {
+    faceCorrectDirectionOnPath(sprite, path[i], path[i + 1]);
+
     const initSpriteTexturePivot = sprite.texturePivot;
     const { x: endX, y: endY } =
       getCoordsToAlignCharacterSpriteAndHexagonPivots(
@@ -138,6 +185,7 @@ const movementAnimationOnPath = async (
       clearInterval(interval);
       sprite.position.set(endX, endY);
       if (i === path.length - 2) {
+        invertCharacterSpriteOnXToFaceRight(sprite, path[i + 1]);
         sprite.textures = loadedSpriteSheets[0].animations["idle"];
         sprite.play();
       }

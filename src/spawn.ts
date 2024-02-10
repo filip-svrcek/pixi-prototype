@@ -4,7 +4,7 @@ import { CharacterAnimatedSprite, Hexagon, SeedMap } from "./types";
 import { loadedSpriteSheets } from "./main";
 import {
   getCoordsToAlignCharacterSpriteAndHexagonPivots,
-  invertCharacterSpriteOnX,
+  invertCharacterSpriteOnXToFaceLeft,
 } from "./movement";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
@@ -17,6 +17,7 @@ export const createPlayerCharacter = (seedMap: SeedMap) => {
         .indexOf(2),
       texturePivot: { x: 45, y: 130 },
       hexagon: null,
+      facingDirection: "right" as const,
     },
   );
   player.animationSpeed = 0.4;
@@ -37,9 +38,10 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
           gridIndexPosition: index,
           texturePivot: { x: 45, y: 130 },
           hexagon: null,
+          facingDirection: "right" as const,
         },
       );
-      invertCharacterSpriteOnX(nonPlayer);
+      invertCharacterSpriteOnXToFaceLeft(nonPlayer);
       nonPlayer.animationSpeed = 0.4;
       nonPlayer.play();
       npcArray.push(nonPlayer);
