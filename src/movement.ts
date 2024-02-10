@@ -112,7 +112,7 @@ const movementAnimationOnPath = async (
   sprite: CharacterAnimatedSprite,
   path: Hexagon[],
 ) => {
-  const timeToNextHexagon = 1000;
+  const timeToNextHexagon = 500; //ms
   const framesPerTravelToNextHexagon = 25;
   const frameTimeToLive = timeToNextHexagon / framesPerTravelToNextHexagon;
 
@@ -127,15 +127,14 @@ const movementAnimationOnPath = async (
         path[i + 1],
       );
     const { x: startX, y: startY } = sprite.position;
-    const xStep = (endX - startX) / frameTimeToLive;
-    const yStep = (endY - startY) / frameTimeToLive;
+    const xStep = (endX - startX) / framesPerTravelToNextHexagon;
+    const yStep = (endY - startY) / framesPerTravelToNextHexagon;
 
     const interval = setInterval(() => {
       sprite.position.set(sprite.position.x + xStep, sprite.position.y + yStep);
     }, frameTimeToLive);
 
-    const magicalDelayRate = 1.6;
-    await timeout(timeToNextHexagon * magicalDelayRate).then(() => {
+    await timeout(timeToNextHexagon).then(() => {
       clearInterval(interval);
       sprite.position.set(endX, endY);
       if (i === path.length - 2) {
