@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { Hexagon } from "./types";
+import { Hexagon } from "../types";
 
 export const areObjectsEqual = (obj1: any, obj2: any) => {
   // Get the keys of both objects
@@ -58,17 +58,3 @@ export const assignHexagonNeighbors = (hexagons: Hexagon[]) => {
     hexagon.neighbors = neighbors;
   });
 };
-
-// export const resetHexagonBoard = (board: PIXI.Container) => {
-//   board.children.forEach((el: any) => {
-//     if (Object.hasOwnProperty.call(el, "hexagonGridCoords")) {
-//       el.tint = 0xffffff;
-//     }
-//   });
-// };
-
-// export const colorHexagonPath = (path: Hexagon[]) => {
-//   path.forEach((hexagon) => {
-//     hexagon.tint = 0x555555;
-//   });
-// };

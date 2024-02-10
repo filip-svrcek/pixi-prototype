@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import { SeedMap } from "./types";
-import knightSpriteSheet from "./assets/knight/knight.json";
-import knightSpriteSheetImage from "./assets/knight/knight.png";
+import { SeedMap } from "../types";
+import knightSpriteSheet from "./../assets/knight/knight.json";
+import knightSpriteSheetImage from "../assets/knight/knight.png";
 
 const spriteSheetList: { readonly [key: number]: any } = {
   2: { json: knightSpriteSheet, image: knightSpriteSheetImage },

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import { Hexagon } from "./types";
-import { assignHexagonNeighbors } from "./utils";
+import { Hexagon } from "../types";
+import { assignHexagonNeighbors } from "../utils/general";
 
 export const drawHexagon = (
   drawingStartingPoints: { x: number; y: number },

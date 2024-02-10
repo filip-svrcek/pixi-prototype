@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { Hexagon } from "./types";
+import { Hexagon } from "../types";
 
 export const devDrawBoundariesFromCoords = (object: any, color = "white") => {
   if (process.env.NODE_ENV !== "development") {

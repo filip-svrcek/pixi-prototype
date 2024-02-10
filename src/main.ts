@@ -1,15 +1,15 @@
 import * as PIXI from "pixi.js";
 
-import { drawHexagonBoard } from "./graphics";
-import { loadSpriteSheets } from "./loader";
+import { drawHexagonBoard } from "./draw/drawGraphics";
+import { loadSpriteSheets } from "./utils/loader";
 import {
   createNonPlayerCharacters,
   createPlayerCharacter,
   spawnCharacters,
-} from "./spawn";
-import { moveSpriteToHexagon } from "./movement";
-import { devDrawHexagonCoordsText } from "./devTools";
-import { getHexagonsFromBoard } from "./utils";
+} from "./utils/spawn";
+import { moveSpriteToHexagon } from "./actions/movement";
+import { devDrawHexagonCoordsText } from "./utils/devTools";
+import { getHexagonsFromBoard } from "./utils/general";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render.

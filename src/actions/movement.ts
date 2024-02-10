@@ -1,6 +1,6 @@
-import { loadedSpriteSheets } from "./main";
-import { CharacterAnimatedSprite, Hexagon } from "./types";
-import { getHexagonsFromBoard } from "./utils";
+import { loadedSpriteSheets } from "../main";
+import { CharacterAnimatedSprite, Hexagon } from "../types";
+import { getHexagonsFromBoard } from "../utils/general";
 
 export const moveSpriteToHexagon = (
   sprite: CharacterAnimatedSprite,
