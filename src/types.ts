@@ -1,6 +1,6 @@
-import * as PIXI from "pixi.js";
+import { AnimatedSprite, Graphics } from "pixi.js";
 
-export type Hexagon = PIXI.Graphics & {
+export type Hexagon = Graphics & {
   variant: number;
   hexagonPivot: { x: number; y: number };
   hexagonGridCoords: { x: number; y: number };
@@ -10,7 +10,7 @@ export type Hexagon = PIXI.Graphics & {
 
 export type SeedMap = number[][];
 
-export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
+export type CharacterAnimatedSprite = AnimatedSprite & {
   // health: number;
   // attack: number;
   // defense: number;
@@ -31,7 +31,7 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
   // selected: boolean;
   // tint: number;
   // alpha: number;
-  // _bounds: PIXI.Rectangle;
+  // _bounds: Rectangle;
 };
 
 // export type SpriteSheet = {
@@ -58,6 +58,6 @@ export type CharacterAnimatedSprite = PIXI.AnimatedSprite & {
 //     };
 //   };
 //   animations: {
-//     [key: string]: PIXI.Texture[];
+//     [key: string]: Texture[];
 //   };
 // };

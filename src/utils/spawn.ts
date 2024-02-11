@@ -1,15 +1,14 @@
-import * as PIXI from "pixi.js";
-
 import { CharacterAnimatedSprite, Hexagon, SeedMap } from "../types";
 import { loadedSpriteSheets } from "../main";
 import {
   getCoordsToAlignCharacterSpriteAndHexagonPivots,
   invertCharacterSpriteOnXToFaceLeft,
 } from "../actions/movement";
+import { AnimatedSprite, Container } from "pixi.js";
 
 export const createPlayerCharacter = (seedMap: SeedMap) => {
   const player: CharacterAnimatedSprite = Object.assign(
-    new PIXI.AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
+    new AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
     {
       gridIndexPosition: seedMap
         .flat()
@@ -33,7 +32,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
   usableHexagons.forEach((el, index) => {
     if (el > 2) {
       const nonPlayer: CharacterAnimatedSprite = Object.assign(
-        new PIXI.AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
+        new AnimatedSprite(loadedSpriteSheets[0].animations["idle"]),
         {
           gridIndexPosition: index,
           texturePivot: { x: 45, y: 130 },
@@ -53,7 +52,7 @@ export const createNonPlayerCharacters = (seedMap: SeedMap) => {
 
 export const spawnCharacters = (
   characters: CharacterAnimatedSprite[],
-  boardGrid: PIXI.Container,
+  boardGrid: Container,
 ) => {
   characters.forEach((char) => {
     if (char.gridIndexPosition) {

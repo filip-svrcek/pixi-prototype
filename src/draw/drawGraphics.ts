@@ -1,6 +1,6 @@
-import * as PIXI from "pixi.js";
+import { Container, Graphics, Point } from "pixi.js";
 import { Hexagon } from "../types";
-import { assignHexagonNeighbors } from "../utils/general";
+import { assignHexagonNeighbors } from "../utils/hexagon";
 
 export const drawHexagon = (
   drawingStartingPoints: { x: number; y: number },
@@ -11,7 +11,7 @@ export const drawHexagon = (
   const { x, y } = drawingStartingPoints;
 
   // Create a Graphics object
-  const hexagon = Object.assign(new PIXI.Graphics(), {
+  const hexagon = Object.assign(new Graphics(), {
     variant: hexagonVariant,
     hexagonPivot: { x: 45, y: 75 },
     hexagonGridCoords,
@@ -32,7 +32,7 @@ export const drawHexagon = (
     const angle = (i / 6) * Math.PI * 2 + Math.PI / 2;
     const x = size * Math.cos(angle);
     const y = size * Math.sin(angle);
-    points.push(new PIXI.Point(x, y));
+    points.push(new Point(x, y));
   }
 
   // Move the hexagon object to the starting point
@@ -67,14 +67,14 @@ export const drawHexagon = (
 };
 
 export const drawHexagonBoard = (map: number[][]) => {
-  const gridContainer = new PIXI.Container();
+  const gridContainer = new Container();
   const size = 50;
   const points = [];
   for (let i = 0; i < 6; i++) {
     const angle = (i / 6) * Math.PI * 2 + Math.PI / 2;
     const x = size * Math.cos(angle);
     const y = size * Math.sin(angle);
-    points.push(new PIXI.Point(x, y));
+    points.push(new Point(x, y));
   }
   let x = 0.9 * size;
   let y = 0;
@@ -98,5 +98,5 @@ export const drawHexagonBoard = (map: number[][]) => {
   gridContainer.x = 0.5 * window.innerWidth - gridContainer.width / 2;
   gridContainer.y = 0.5 * window.innerHeight - gridContainer.height / 2;
   assignHexagonNeighbors(gridContainer.children as Hexagon[]);
-  return gridContainer as PIXI.Container<Hexagon>;
+  return gridContainer as Container<Hexagon>;
 };

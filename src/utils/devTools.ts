@@ -1,4 +1,4 @@
-import * as PIXI from "pixi.js";
+import { Container, Graphics, Text } from "pixi.js";
 import { Hexagon } from "../types";
 
 export const devDrawBoundariesFromCoords = (object: any, color = "white") => {
@@ -7,7 +7,7 @@ export const devDrawBoundariesFromCoords = (object: any, color = "white") => {
   }
   const { x, y, width, height, parent } = object;
 
-  const graphics = new PIXI.Graphics();
+  const graphics = new Graphics();
   graphics.lineStyle(2, color, 1);
   graphics.drawRect(x, y, width, height);
   parent.addChild(graphics);
@@ -23,7 +23,7 @@ export const devDrawBoundariesFromBounds = (object: any, color = "white") => {
   const height = _bounds.maxY - _bounds.minY;
   const { parent } = object;
 
-  const graphics = new PIXI.Graphics();
+  const graphics = new Graphics();
   graphics.lineStyle(2, color, 1);
   graphics.drawRect(x, y, width, height);
   parent.addChild(graphics);
@@ -32,13 +32,13 @@ export const devDrawBoundariesFromBounds = (object: any, color = "white") => {
 export const devDrawPoint = (
   x: number,
   y: number,
-  parent: PIXI.Container,
+  parent: Container,
   color = "white",
 ) => {
   if (process.env.NODE_ENV !== "development") {
     return;
   }
-  const graphics = new PIXI.Graphics();
+  const graphics = new Graphics();
   graphics.beginFill(color);
   graphics.drawCircle(x, y, 5);
   graphics.endFill();
@@ -50,7 +50,7 @@ export const devDrawHexagonCoordsText = (hexagon: Hexagon) => {
     return;
   }
   const { x, y } = hexagon.hexagonGridCoords;
-  const text = new PIXI.Text(`${x},${y}`, {
+  const text = new Text(`${x},${y}`, {
     fontSize: 15,
     fill: "white",
   });

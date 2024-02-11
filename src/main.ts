@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js";
-
 import { drawHexagonBoard } from "./draw/drawGraphics";
 import { loadSpriteSheets } from "./utils/loader";
 import {
@@ -9,11 +7,12 @@ import {
 } from "./utils/spawn";
 import { moveSpriteToHexagon } from "./actions/movement";
 import { devDrawHexagonCoordsText } from "./utils/devTools";
-import { getHexagonsFromBoard } from "./utils/general";
+import { Application } from "pixi.js";
+import { getHexagonsFromBoard } from "./utils/hexagon";
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render.
-const app = new PIXI.Application({
+const app = new Application({
   background: "#1099bb",
   resizeTo: window,
 });

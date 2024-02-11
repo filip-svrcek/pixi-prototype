@@ -1,6 +1,8 @@
 import { loadedSpriteSheets } from "../main";
 import { CharacterAnimatedSprite, Hexagon } from "../types";
-import { getHexagonsFromBoard } from "../utils/general";
+import { awaitableTimeout } from "../utils/general";
+import { getHexagonsFromBoard } from "../utils/hexagon";
+import { disableBoardInteractivity, enableBoardInteractivity } from "./board";
 
 export const moveSpriteToHexagon = (
   sprite: CharacterAnimatedSprite,
@@ -126,7 +128,6 @@ const getPathToHexagon = (startHexagon: Hexagon, endHexagon: Hexagon) => {
     }
   }
 
-  // Now, you can trace back the path from endNode to startNode using the "previous" property in each node.
   let path = [];
   let current = endNode;
   while (current) {
@@ -161,6 +162,7 @@ const movementAnimationOnPath = async (
   const framesPerTravelToNextHexagon = 25;
   const frameTimeToLive = timeToNextHexagon / framesPerTravelToNextHexagon;
 
+  disableBoardInteractivity(path[0].parent);
   sprite.textures = loadedSpriteSheets[0].animations["walk"];
   sprite.play();
 
@@ -181,18 +183,15 @@ const movementAnimationOnPath = async (
       sprite.position.set(sprite.position.x + xStep, sprite.position.y + yStep);
     }, frameTimeToLive);
 
-    await timeout(timeToNextHexagon).then(() => {
+    await awaitableTimeout(timeToNextHexagon).then(() => {
       clearInterval(interval);
       sprite.position.set(endX, endY);
       if (i === path.length - 2) {
         invertCharacterSpriteOnXToFaceRight(sprite, path[i + 1]);
         sprite.textures = loadedSpriteSheets[0].animations["idle"];
         sprite.play();
+        enableBoardInteractivity(path[0].parent);
       }
     });
   }
-};
-
-const timeout = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 };
