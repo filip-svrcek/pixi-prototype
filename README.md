@@ -1,6 +1,6 @@
-# Board Game
+# City Simulator
 
-A hexagonal grid-based game built with PixiJS. Proof of concept.
+A hexagonal grid-based city management simulator with a fantasy RPG twist.
 
 ## Project Structure
 
@@ -12,10 +12,12 @@ src/
 │   ├── interfaces.ts        # TypeScript interfaces and types
 │   ├── Game.ts              # Main game controller
 │   ├── HexBoard.ts          # Hexagonal board management
-│   └── Character.ts         # Character entity class
-├── services/
-│   ├── AssetLoader.ts       # Asset loading service
-│   └── PathfindingService.ts # Dijkstra pathfinding algorithm
+├── sim/
+│   ├── BuildingCatalog.ts   # Building definitions
+│   ├── CityState.ts         # City resources and districts
+│   └── Simulation.ts        # Resource tick logic
+├── ui/
+│   └── Hud.ts               # HUD display
 ├── utils/
 │   ├── devTools.ts          # Development debugging tools
 │   └── general.ts           # General utility functions
@@ -27,11 +29,11 @@ src/
 
 ### Core Classes
 
-- **Game**: Main game controller that manages initialization, characters, and interactions
+- **Game**: Main game controller that manages initialization and interactions
 - **HexBoard**: Manages the hexagonal grid, rendering, and neighbor relationships
-- **Character**: Represents player and NPC entities with movement and animations
-- **PathfindingService**: Implements Dijkstra's algorithm for optimal pathfinding
-- **AssetLoader**: Handles asynchronous loading of spritesheets and assets
+- **CityState**: Stores resources, districts, and hero bonuses
+- **Simulation**: Applies production ticks over time
+- **Hud**: Displays resources and selected building
 
 ## Getting Started
 
@@ -48,30 +50,28 @@ npm run build
 
 ## Seed Map Format
 
-The seed map defines the game board layout:
+The seed map defines the city layout:
 
 ```typescript
 const seedMap = [
   [1, 1, 1, 1, 1],     // Row 0
   [1, 0, 1, 0, 1, 1],  // Row 1 (offset)
-  [2, 1, 0, 1, 3],     // Row 2
+  [1, 1, 0, 1, 1],     // Row 2
   // ...
 ];
 ```
 
 **Tile Types:**
 - `0` - Blocked/Empty (not rendered)
-- `1` - Walkable terrain
-- `2` - Player spawn point
-- `3` - Enemy spawn point
+- `1` - Buildable district
 
 ## Configuration
 
 Edit `src/config/constants.ts` to customize:
 - Hexagon size and spacing
-- Movement speed and animation frames
-- Character settings
-- Colors and visual effects
+- Resource tick speed
+- Starting resources
+- District colors and building types
 
 ## Development Tools
 

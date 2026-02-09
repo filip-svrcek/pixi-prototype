@@ -65,12 +65,14 @@ export class HexBoard {
       hexagonPivot: { ...HEXAGON_PIVOT },
       hexagonGridCoords: gridCoords,
       neighbors: [] as IHexagon[],
+      baseTint: COLORS.DISTRICT_EMPTY,
     }) as IHexagon;
 
     // Set fill and line style
     hexagon.beginFill(COLORS.HEXAGON_DEFAULT);
     hexagon.lineStyle(2, COLORS.HEXAGON_BORDER);
     hexagon.alpha = 0.5;
+    hexagon.tint = hexagon.baseTint ?? COLORS.DISTRICT_EMPTY;
 
     // Calculate hexagon points
     const points: Point[] = [];
@@ -108,7 +110,7 @@ export class HexBoard {
 
     hexagon.on("mouseout", () => {
       if (hexagon.tint !== COLORS.HEXAGON_SELECTED) {
-        hexagon.tint = COLORS.HEXAGON_DEFAULT;
+        hexagon.tint = hexagon.baseTint ?? COLORS.DISTRICT_EMPTY;
       }
     });
   }
@@ -174,5 +176,15 @@ export class HexBoard {
    */
   setInteractive(interactive: boolean): void {
     this.container.interactiveChildren = interactive;
+  }
+
+  /**
+   * Set the base tint for a hexagon (used for district visuals)
+   */
+  setHexagonBaseTint(hexagon: IHexagon, tint: number): void {
+    hexagon.baseTint = tint;
+    if (hexagon.tint !== COLORS.HEXAGON_HOVER) {
+      hexagon.tint = tint;
+    }
   }
 }

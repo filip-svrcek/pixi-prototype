@@ -1,9 +1,10 @@
-import { Application, Spritesheet } from "pixi.js";
-import { IGameConfig, SeedMap } from "../core/interfaces";
+import { Application, Sprite, Texture } from "pixi.js";
+import { IGameConfig, SeedMap, IHexagon } from "../core/interfaces";
 import { HexBoard } from "../core/HexBoard";
-import { Character } from "../core/Character";
-import { AssetLoader } from "../services/AssetLoader";
-import { TileType, Direction } from "../config/constants";
+import { BuildingType } from "../config/constants";
+import { CityState } from "../sim/CityState";
+import { Simulation } from "../sim/Simulation";
+import { Hud } from "../ui/Hud";
 
 /**
  * Game is the main game controller that manages the game state and entities
@@ -11,10 +12,11 @@ import { TileType, Direction } from "../config/constants";
 export class Game {
   private app: Application;
   private board: HexBoard;
-  private player: Character | null = null;
-  private enemies: Character[] = [];
-  private spritesheets: Spritesheet[] = [];
   private seedMap: SeedMap;
+  private city: CityState | null = null;
+  private simulation: Simulation | null = null;
+  private hud: Hud | null = null;
+  private selectedBuilding: BuildingType = BuildingType.FARM;
 
   constructor(config: IGameConfig) {
     this.seedMap = config.seedMap;
@@ -34,61 +36,40 @@ export class Game {
     // Add canvas to DOM
     document.body.appendChild(this.app.view as unknown as Node);
 
-    // Load assets
-    this.spritesheets = await AssetLoader.loadSpritesheets(this.seedMap);
-
-    // Create characters
-    this.createCharacters();
-
     // Setup board
     this.app.stage.addChild(this.board.getContainer());
 
-    // Spawn characters on board
-    this.spawnCharacters();
+    // Initialize city state and simulation
+    this.city = new CityState(this.board.getHexagons());
+    this.simulation = new Simulation(this.city);
+
+    // Initialize HUD
+    this.hud = new Hud();
+    this.app.stage.addChild(this.hud.getContainer());
 
     // Setup interactions
     this.setupInteractions();
+
+    // Start simulation loop
+    this.app.ticker.add((delta) => {
+      if (!this.city || !this.simulation || !this.hud) {
+        return;
+      }
+
+      const deltaMs = (delta * 1000) / 60;
+      this.simulation.update(deltaMs);
+      this.hud.update(this.city, this.selectedBuilding);
+    });
   }
 
   /**
    * Create player and enemy characters from seed map
    */
-  private createCharacters(): void {
-    const flatMap = this.seedMap.flat().filter((tile) => tile !== TileType.BLOCKED);
-    
-    flatMap.forEach((tile, index) => {
-      if (tile === TileType.PLAYER_SPAWN) {
-        this.player = new Character(this.spritesheets[0], index, Direction.RIGHT);
-      } else if (tile === TileType.ENEMY_SPAWN) {
-        const enemy = new Character(this.spritesheets[0], index, Direction.LEFT);
-        this.enemies.push(enemy);
-      }
-    });
-  }
-
-  /**
-   * Spawn characters on the board
-   */
-  private spawnCharacters(): void {
-    const hexagons = this.board.getHexagons();
-    const allCharacters = [this.player, ...this.enemies].filter(Boolean) as Character[];
-
-    allCharacters.forEach((character) => {
-      const sprite = character.getSprite();
-      const hexagon = hexagons[sprite.gridIndexPosition];
-      
-      if (hexagon) {
-        this.board.getContainer().addChild(sprite as any);
-        character.positionOnHexagon(hexagon);
-      }
-    });
-  }
-
   /**
    * Setup click/tap interactions on hexagons
    */
   private setupInteractions(): void {
-    if (!this.player) {
+    if (!this.city) {
       return;
     }
 
@@ -96,18 +77,57 @@ export class Game {
     
     hexagons.forEach((hexagon) => {
       const handleClick = () => {
-        if (this.player) {
-          this.board.setInteractive(false);
-          
-          this.player.moveTo(hexagon, () => {
-            this.board.setInteractive(true);
-          });
+        if (!this.city) {
+          return;
+        }
+
+        const placed = this.city.placeBuilding(hexagon, this.selectedBuilding);
+        if (placed) {
+          this.placeBuildingIcon(hexagon, placed.iconPath);
         }
       };
 
       hexagon.on("click", handleClick);
       hexagon.on("tap", handleClick);
     });
+
+    window.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "1":
+          this.selectedBuilding = BuildingType.TOWN_CENTER;
+          break;
+        case "2":
+          this.selectedBuilding = BuildingType.FARM;
+          break;
+        case "3":
+          this.selectedBuilding = BuildingType.MANA_WELL;
+          break;
+        case "4":
+          this.selectedBuilding = BuildingType.WORKSHOP;
+          break;
+        default:
+          return;
+      }
+    });
+  }
+
+  private placeBuildingIcon(hexagon: IHexagon, iconPath: string): void {
+    if (hexagon.buildingSprite) {
+      return;
+    }
+
+    const texture = Texture.from(iconPath);
+    const sprite = new Sprite(texture);
+    const centerX = hexagon._bounds.minX + (hexagon._bounds.maxX - hexagon._bounds.minX) / 2;
+    const centerY = hexagon._bounds.minY + (hexagon._bounds.maxY - hexagon._bounds.minY) / 2;
+
+    sprite.anchor.set(0.5, 0.5);
+    sprite.position.set(centerX, centerY);
+    sprite.width = 36;
+    sprite.height = 36;
+
+    this.board.getContainer().addChild(sprite as any);
+    hexagon.buildingSprite = sprite;
   }
 
   /**
@@ -124,17 +144,7 @@ export class Game {
     return this.board;
   }
 
-  /**
-   * Get the player character
-   */
-  getPlayer(): Character | null {
-    return this.player;
-  }
-
-  /**
-   * Get all enemy characters
-   */
-  getEnemies(): Character[] {
-    return this.enemies;
+  getCity(): CityState | null {
+    return this.city;
   }
 }

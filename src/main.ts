@@ -2,15 +2,15 @@ import { TileType } from "./config/constants";
 import { Game } from "./core/Game";
 import { DevTools } from "./utils/devTools";
 
-// Define the game map
-// 0 = blocked, 1 = walkable, 2 = player spawn, 3 = enemy spawn
+// Define the city map
+// 0 = blocked/empty, 1 = buildable district
 const seedMap: TileType[][] = [
   [1, 1, 1, 1, 1],
   [1, 0, 1, 0, 1, 1],
-  [2, 1, 0, 1, 3],
+  [1, 1, 0, 1, 1],
   [1, 1, 1, 0, 1, 1],
   [1, 0, 1, 1, 1],
-  [1, 1, 1, 1, 1, 3],
+  [1, 1, 1, 1, 1, 1],
 ];
 
 // Create and initialize the game

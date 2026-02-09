@@ -14,6 +14,16 @@ export const MOVEMENT_TIME_MS = 500;
 export const MOVEMENT_FRAMES = 25;
 export const MOVEMENT_FRAME_TIME = MOVEMENT_TIME_MS / MOVEMENT_FRAMES;
 
+// City simulation settings
+export const CITY_TICK_MS = 1000;
+export const STARTING_RESOURCES = {
+  gold: 120,
+  food: 60,
+  mana: 40,
+  lumber: 80,
+  housing: 5,
+};
+
 export enum TileType {
   BLOCKED = 0,
   WALKABLE = 1,
@@ -26,6 +36,11 @@ export const COLORS = {
   HEXAGON_HOVER: 0x00ff00,
   HEXAGON_SELECTED: 0x000000,
   HEXAGON_BORDER: 0x000000,
+  DISTRICT_EMPTY: 0x3b2d4a,
+  DISTRICT_TOWN_CENTER: 0x7a4b20,
+  DISTRICT_FARM: 0x5c8f3a,
+  DISTRICT_MANA_WELL: 0x3b6ea8,
+  DISTRICT_WORKSHOP: 0x8c6a3c,
 } as const;
 
 export enum AnimationType {
@@ -36,4 +51,19 @@ export enum AnimationType {
 export enum Direction {
   LEFT = "left",
   RIGHT = "right",
+}
+
+export enum ResourceType {
+  GOLD = "gold",
+  FOOD = "food",
+  MANA = "mana",
+  LUMBER = "lumber",
+  HOUSING = "housing",
+}
+
+export enum BuildingType {
+  TOWN_CENTER = "town_center",
+  FARM = "farm",
+  MANA_WELL = "mana_well",
+  WORKSHOP = "workshop",
 }
