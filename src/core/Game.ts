@@ -1,5 +1,10 @@
 import { Application, Sprite, Texture } from "pixi.js";
-import { IGameConfig, SeedMap, IHexagon } from "../core/interfaces";
+import {
+  IGameConfig,
+  SeedMap,
+  IHexagon,
+  BuildingDefinition,
+} from "../core/interfaces";
 import { HexBoard } from "../core/HexBoard";
 import { BuildingType } from "../config/constants";
 import { CityState } from "../sim/CityState";
@@ -74,7 +79,7 @@ export class Game {
     }
 
     const hexagons = this.board.getHexagons();
-    
+
     hexagons.forEach((hexagon) => {
       const handleClick = () => {
         if (!this.city) {
@@ -83,7 +88,7 @@ export class Game {
 
         const placed = this.city.placeBuilding(hexagon, this.selectedBuilding);
         if (placed) {
-          this.placeBuildingIcon(hexagon, placed.iconPath);
+          this.placeBuildingIcon(hexagon, placed);
         }
       };
 
@@ -111,20 +116,29 @@ export class Game {
     });
   }
 
-  private placeBuildingIcon(hexagon: IHexagon, iconPath: string): void {
+  private placeBuildingIcon(
+    hexagon: IHexagon,
+    building: BuildingDefinition,
+  ): void {
     if (hexagon.buildingSprite) {
       return;
     }
 
-    const texture = Texture.from(iconPath);
+    const texture = Texture.from(building.iconPath);
     const sprite = new Sprite(texture);
-    const centerX = hexagon._bounds.minX + (hexagon._bounds.maxX - hexagon._bounds.minX) / 2;
-    const centerY = hexagon._bounds.minY + (hexagon._bounds.maxY - hexagon._bounds.minY) / 2;
+    const centerX =
+      hexagon._bounds.minX +
+      (hexagon._bounds.maxX - hexagon._bounds.minX) / 2 +
+      (building.centerOffset?.x ?? 0);
+    const centerY =
+      hexagon._bounds.minY +
+      (hexagon._bounds.maxY - hexagon._bounds.minY) / 2 +
+      (building.centerOffset?.y ?? 0);
 
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(centerX, centerY);
-    sprite.width = 36;
-    sprite.height = 36;
+    sprite.width = building.size?.width ?? 128;
+    sprite.height = building.size?.height ?? 128;
 
     this.board.getContainer().addChild(sprite as any);
     hexagon.buildingSprite = sprite;

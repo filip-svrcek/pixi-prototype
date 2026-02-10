@@ -36,6 +36,8 @@ export interface BuildingDefinition {
   production: Partial<ResourceLedger>;
   upkeep?: Partial<ResourceLedger>;
   iconPath: string;
+  size?: { width: number; height: number };
+  centerOffset?: { x: number; y: number };
 }
 
 export interface BuildingInstance {

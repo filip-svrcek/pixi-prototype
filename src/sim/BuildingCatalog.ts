@@ -21,7 +21,8 @@ export const BUILDINGS: Record<BuildingType, BuildingDefinition> = {
     name: "Mana Well",
     cost: { gold: 25, mana: 5 },
     production: { mana: 5 },
-    iconPath: "/assets/buildings/mana-well.svg",
+    iconPath: "/assets/buildings/mana-well.png",
+    size: { width: 80, height: 80 },
   },
   [BuildingType.WORKSHOP]: {
     type: BuildingType.WORKSHOP,
