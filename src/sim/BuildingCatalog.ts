@@ -7,14 +7,14 @@ export const BUILDINGS: Record<BuildingType, BuildingDefinition> = {
     name: "Town Center",
     cost: { gold: 0, lumber: 0 },
     production: { housing: 2, gold: 2 },
-    iconPath: "/assets/buildings/town-center.svg",
+    iconPath: "/assets/buildings/town-hall.png",
   },
   [BuildingType.FARM]: {
     type: BuildingType.FARM,
-    name: "Enchanted Farm",
+    name: "Farm",
     cost: { gold: 20, lumber: 10 },
     production: { food: 6 },
-    iconPath: "/assets/buildings/farm.svg",
+    iconPath: "/assets/buildings/farm.png",
   },
   [BuildingType.MANA_WELL]: {
     type: BuildingType.MANA_WELL,
@@ -24,12 +24,18 @@ export const BUILDINGS: Record<BuildingType, BuildingDefinition> = {
     iconPath: "/assets/buildings/mana-well.png",
     size: { width: 80, height: 80 },
   },
-  [BuildingType.WORKSHOP]: {
-    type: BuildingType.WORKSHOP,
-    name: "Artificer Workshop",
+  [BuildingType.WOODCUTTER]: {
+    type: BuildingType.WOODCUTTER,
+    name: "Woodcutter",
     cost: { gold: 30, food: 5 },
     production: { lumber: 4, gold: 1 },
-    iconPath: "/assets/buildings/workshop.svg",
+    iconPath: "/assets/buildings/woodcutter.png",
+  },
+  [BuildingType.BLACKSMITH]: {
+    type: BuildingType.BLACKSMITH,
+    name: "Blacksmith",
+    cost: { gold: 40, lumber: 20 },
+    iconPath: "/assets/buildings/blacksmith.png",
   },
 };
 
@@ -37,9 +43,12 @@ export const BUILDING_ORDER: BuildingType[] = [
   BuildingType.TOWN_CENTER,
   BuildingType.FARM,
   BuildingType.MANA_WELL,
-  BuildingType.WORKSHOP,
+  BuildingType.WOODCUTTER,
+  BuildingType.BLACKSMITH,
 ];
 
-export const getBuildingDefinition = (type: BuildingType): BuildingDefinition => {
+export const getBuildingDefinition = (
+  type: BuildingType,
+): BuildingDefinition => {
   return BUILDINGS[type];
 };

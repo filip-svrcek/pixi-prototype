@@ -37,7 +37,7 @@ export class Simulation {
       }
 
       const definition = BUILDINGS[district.building.type];
-      Object.entries(definition.production).forEach(([key, value]) => {
+      Object.entries(definition?.production ?? {}).forEach(([key, value]) => {
         const resourceKey = key as keyof ResourceLedger;
         const multiplier = this.city.getProductionMultiplier(resourceKey);
         totals[resourceKey] = (totals[resourceKey] ?? 0) + (value ?? 0) * multiplier;

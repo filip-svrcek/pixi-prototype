@@ -65,5 +65,6 @@ export enum BuildingType {
   TOWN_CENTER = "town_center",
   FARM = "farm",
   MANA_WELL = "mana_well",
-  WORKSHOP = "workshop",
+  WOODCUTTER = "woodcutter",
+  BLACKSMITH = "blacksmith",
 }
