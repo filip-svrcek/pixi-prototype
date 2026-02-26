@@ -59,7 +59,7 @@ export class HexBoard {
     position: { x: number; y: number },
     size: number,
     variant: number,
-    gridCoords: GridCoords
+    gridCoords: GridCoords,
   ): IHexagon {
     const hexagon = Object.assign(new Graphics(), {
       variant,
@@ -122,10 +122,10 @@ export class HexBoard {
   private assignNeighbors(): void {
     this.hexagons.forEach((hexagon) => {
       const { x, y } = hexagon.hexagonGridCoords;
-      
+
       hexagon.neighbors = this.hexagons.filter((other) => {
         const { x: nx, y: ny } = other.hexagonGridCoords;
-        
+
         // Check all 6 possible neighbor positions
         return (
           (x === nx && y - 1 === ny) || // Top
@@ -168,7 +168,9 @@ export class HexBoard {
    */
   getHexagonAt(coords: GridCoords): IHexagon | undefined {
     return this.hexagons.find(
-      (h) => h.hexagonGridCoords.x === coords.x && h.hexagonGridCoords.y === coords.y
+      (h) =>
+        h.hexagonGridCoords.x === coords.x &&
+        h.hexagonGridCoords.y === coords.y,
     );
   }
 
