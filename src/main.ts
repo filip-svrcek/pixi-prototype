@@ -1,4 +1,4 @@
-import { TileType } from "./config/constants";
+import { TileTerrainType } from "./config/constants";
 import { Game } from "./core/Game";
 import { DevTools } from "./utils/devTools";
 
