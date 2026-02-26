@@ -7,7 +7,8 @@ import {
   HEXAGON_SPACING_Y,
   HEXAGON_OFFSET_X,
   COLORS,
-  TileType,
+  TileTerrainType,
+  TILE_TERRAIN_COLORS,
 } from "../config/constants";
 
 /**
@@ -65,7 +66,7 @@ export class HexBoard {
       hexagonPivot: { ...HEXAGON_PIVOT },
       hexagonGridCoords: gridCoords,
       neighbors: [] as IHexagon[],
-      baseTint: COLORS.DISTRICT_EMPTY,
+      baseTint: TILE_TERRAIN_COLORS[variant as TileTerrainType],
     }) as IHexagon;
 
     // Set fill and line style

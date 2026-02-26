@@ -33,6 +33,14 @@ export enum TileTerrainType {
   DESERT = 4,
 }
 
+export const TILE_TERRAIN_COLORS: Record<TileTerrainType, number> = {
+  [TileTerrainType.GRASSLANDS]: 0x32a852,
+  [TileTerrainType.FOREST]: 0x6f4e37,
+  [TileTerrainType.MOUNTAIN]: 0x9c9e9b,
+  [TileTerrainType.WATER]: 0x4d79ff,
+  [TileTerrainType.DESERT]: 0xfff27d,
+} as const;
+
 export const COLORS = {
   HEXAGON_DEFAULT: 0xff0000,
   HEXAGON_HOVER: 0x00ff00,
