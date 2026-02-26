@@ -36,12 +36,12 @@ export class HexBoard {
     for (let row = 0; row < this.seedMap.length; row++) {
       for (let col = 0; col < this.seedMap[row].length; col++) {
         const tileType = this.seedMap[row][col];
-        
-        if (tileType !== TileType.BLOCKED) {
-          const hexagon = this.createHexagon({ x, y }, size, tileType, { x: col, y: row });
-          this.container.addChild(hexagon);
-          this.hexagons.push(hexagon);
-        }
+        const hexagon = this.createHexagon({ x, y }, size, tileType, {
+          x: col,
+          y: row,
+        });
+        this.container.addChild(hexagon);
+        this.hexagons.push(hexagon);
 
         x += HEXAGON_SPACING_X * size;
       }
