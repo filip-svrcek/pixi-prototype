@@ -55,6 +55,11 @@ export class Game {
     this.hud = new Hud();
     this.app.stage.addChild(this.hud.getContainer());
 
+    // Setup building selection callback
+    this.hud.setOnBuildingSelected((building: BuildingType) => {
+      this.selectedBuilding = building;
+    });
+
     // Setup interactions
     this.setupInteractions();
 
@@ -97,25 +102,6 @@ export class Game {
 
       hexagon.on("click", handleClick);
       hexagon.on("tap", handleClick);
-    });
-
-    window.addEventListener("keydown", (event) => {
-      switch (event.key) {
-        case "1":
-          this.selectedBuilding = BuildingType.TOWN_CENTER;
-          break;
-        case "2":
-          this.selectedBuilding = BuildingType.FARM;
-          break;
-        case "3":
-          this.selectedBuilding = BuildingType.MANA_WELL;
-          break;
-        case "4":
-          this.selectedBuilding = BuildingType.WORKSHOP;
-          break;
-        default:
-          return;
-      }
     });
   }
 
