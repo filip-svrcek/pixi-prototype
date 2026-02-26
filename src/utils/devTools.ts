@@ -92,9 +92,3 @@ export class DevTools {
     });
   }
 }
-
-// Legacy exports for backwards compatibility (can be removed if not needed)
-export const devDrawBoundariesFromCoords = DevTools.drawBoundariesFromCoords;
-export const devDrawBoundariesFromBounds = DevTools.drawBoundariesFromBounds;
-export const devDrawPoint = DevTools.drawPoint;
-export const devDrawHexagonCoordsText = DevTools.drawHexagonCoords;
