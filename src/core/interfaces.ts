@@ -85,7 +85,6 @@ export type SeedMap = number[][];
 
 export interface IGameConfig {
   seedMap: SeedMap;
-  backgroundColor: number;
   resizeTo: Window;
 }
 

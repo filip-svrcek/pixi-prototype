@@ -24,11 +24,13 @@ export const STARTING_RESOURCES = {
   housing: 5,
 };
 
-export enum TileType {
-  BLOCKED = 0,
-  WALKABLE = 1,
-  PLAYER_SPAWN = 2,
-  ENEMY_SPAWN = 3,
+
+export enum TileTerrainType {
+  GRASSLANDS = 0,
+  FOREST = 1,
+  MOUNTAIN = 2,
+  WATER = 3,
+  DESERT = 4,
 }
 
 export const COLORS = {
