@@ -93,27 +93,9 @@ export class HexBoard {
     hexagon.endFill();
 
     // Make interactive
-    hexagon.interactive = true;
-    this.setupHexagonInteraction(hexagon);
+    hexagon.eventMode  = "static";
 
     return hexagon;
-  }
-
-  /**
-   * Setup hover effects for hexagons
-   */
-  private setupHexagonInteraction(hexagon: IHexagon): void {
-    hexagon.on("mouseover", () => {
-      if (hexagon.tint !== COLORS.HEXAGON_SELECTED) {
-        hexagon.tint = COLORS.HEXAGON_HOVER;
-      }
-    });
-
-    hexagon.on("mouseout", () => {
-      if (hexagon.tint !== COLORS.HEXAGON_SELECTED) {
-        hexagon.tint = hexagon.baseTint ?? COLORS.DISTRICT_EMPTY;
-      }
-    });
   }
 
   /**
