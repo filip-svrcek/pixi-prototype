@@ -33,10 +33,11 @@ export interface BuildingDefinition {
   type: BuildingType;
   name: string;
   cost: Partial<ResourceLedger>;
+  grant?: Partial<ResourceLedger>;
   production?: Partial<ResourceLedger>;
   upkeep?: Partial<ResourceLedger>;
   iconPath: string;
-  size?: { width: number; height: number };
+  sizeRatio?: number;
   centerOffset?: { x: number; y: number };
 }
 
