@@ -6,7 +6,7 @@ import {
   BuildingDefinition,
 } from "../core/interfaces";
 import { HexBoard } from "../core/HexBoard";
-import { BuildingType } from "../config/constants";
+import { BuildingType, COLORS } from "../config/constants";
 import { CityState } from "../sim/CityState";
 import { Simulation } from "../sim/Simulation";
 import { Hud } from "../ui/Hud";
@@ -27,8 +27,11 @@ export class Game {
     this.seedMap = config.seedMap;
     
     this.app = new Application({
-      background: config.backgroundColor,
+      background: COLORS.BACKGROUND_DEFAULT,
       resizeTo: config.resizeTo,
+      antialias: true,
+      autoDensity: true,
+      resolution: window.devicePixelRatio,
     });
 
     this.board = new HexBoard(this.seedMap);
@@ -137,8 +140,8 @@ export class Game {
 
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(centerX, centerY);
-    sprite.width = building.size?.width ?? 128;
-    sprite.height = building.size?.height ?? 128;
+    sprite.width = building.sizeRatio ? sprite.width * building.sizeRatio : sprite.width;
+    sprite.height = building.sizeRatio ? sprite.height * building.sizeRatio : sprite.height;
 
     this.board.getContainer().addChild(sprite as any);
     hexagon.buildingSprite = sprite;

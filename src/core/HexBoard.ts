@@ -71,8 +71,8 @@ export class HexBoard {
 
     // Set fill and line style
     hexagon.beginFill(COLORS.HEXAGON_DEFAULT);
-    hexagon.lineStyle(2, COLORS.HEXAGON_BORDER);
-    hexagon.alpha = 0.5;
+    hexagon.lineStyle(3, COLORS.HEXAGON_BORDER, 0, 0, true);
+    hexagon.alpha = 1;
     hexagon.tint = hexagon.baseTint ?? COLORS.DISTRICT_EMPTY;
 
     // Calculate hexagon points

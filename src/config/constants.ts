@@ -1,5 +1,5 @@
 // Hexagon settings
-export const HEXAGON_SIZE = 50;
+export const HEXAGON_SIZE = 100;
 export const HEXAGON_PIVOT = { x: 45, y: 75 };
 export const HEXAGON_SPACING_X = 1.8;
 export const HEXAGON_SPACING_Y = 1.6;
@@ -42,15 +42,12 @@ export const TILE_TERRAIN_COLORS: Record<TileTerrainType, number> = {
 } as const;
 
 export const COLORS = {
-  HEXAGON_DEFAULT: 0xff0000,
+  BACKGROUND_DEFAULT: 0x1099bb,
+  HEXAGON_DEFAULT: 0xffffff,
   HEXAGON_HOVER: 0x00ff00,
   HEXAGON_SELECTED: 0x000000,
   HEXAGON_BORDER: 0x000000,
   DISTRICT_EMPTY: 0x3b2d4a,
-  DISTRICT_TOWN_CENTER: 0x7a4b20,
-  DISTRICT_FARM: 0x5c8f3a,
-  DISTRICT_MANA_WELL: 0x3b6ea8,
-  DISTRICT_WORKSHOP: 0x8c6a3c,
 } as const;
 
 export enum AnimationType {
