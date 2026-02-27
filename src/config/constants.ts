@@ -38,7 +38,6 @@ export const TILE_TERRAIN_COLORS: Record<TileTerrainType, number> = {
   [TileTerrainType.FOREST]: 0x6f4e37,
   [TileTerrainType.MOUNTAIN]: 0x9c9e9b,
   [TileTerrainType.WATER]: 0x4d79ff,
-  [TileTerrainType.DESERT]: 0xfff27d,
 } as const;
 
 export const COLORS = {
