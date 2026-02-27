@@ -21,7 +21,7 @@ export class HexBoard {
   constructor(private seedMap: number[][]) {
     this.container = new Container<IHexagon>();
     this.buildBoard();
-    this.assignNeighbors();
+    // this.assignNeighbors();
     this.centerBoard();
   }
 
@@ -98,30 +98,30 @@ export class HexBoard {
     return hexagon;
   }
 
-  /**
-   * Assign neighboring hexagons to each hexagon
-   */
-  private assignNeighbors(): void {
-    this.hexagons.forEach((hexagon) => {
-      const { x, y } = hexagon.hexagonGridCoords;
+  // /**
+  //  * Assign neighboring hexagons to each hexagon
+  //  */
+  // private assignNeighbors(): void {
+  //   this.hexagons.forEach((hexagon) => {
+  //     const { x, y } = hexagon.hexagonGridCoords;
 
-      hexagon.neighbors = this.hexagons.filter((other) => {
-        const { x: nx, y: ny } = other.hexagonGridCoords;
+  //     hexagon.neighbors = this.hexagons.filter((other) => {
+  //       const { x: nx, y: ny } = other.hexagonGridCoords;
 
-        // Check all 6 possible neighbor positions
-        return (
-          (x === nx && y - 1 === ny) || // Top
-          (x === nx && y + 1 === ny) || // Bottom
-          (x + 1 === nx && y === ny) || // Right
-          (x - 1 === nx && y === ny) || // Left
-          // Diagonal neighbors depend on row parity
-          (y % 2 === 0
-            ? (x + 1 === nx && y + 1 === ny) || (x + 1 === nx && y - 1 === ny)
-            : (x - 1 === nx && y + 1 === ny) || (x - 1 === nx && y - 1 === ny))
-        );
-      });
-    });
-  }
+  //       // Check all 6 possible neighbor positions
+  //       return (
+  //         (x === nx && y - 1 === ny) || // Top
+  //         (x === nx && y + 1 === ny) || // Bottom
+  //         (x + 1 === nx && y === ny) || // Right
+  //         (x - 1 === nx && y === ny) || // Left
+  //         // Diagonal neighbors depend on row parity
+  //         (y % 2 === 0
+  //           ? (x + 1 === nx && y + 1 === ny) || (x + 1 === nx && y - 1 === ny)
+  //           : (x - 1 === nx && y + 1 === ny) || (x - 1 === nx && y - 1 === ny))
+  //       );
+  //     });
+  //   });
+  // }
 
   /**
    * Center the board on the screen
