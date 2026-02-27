@@ -1,5 +1,5 @@
-import { AnimatedSprite, Graphics } from "pixi.js";
-import { Direction, BuildingType, TileTerrainType } from "../config/constants";
+import { Graphics } from "pixi.js";
+import { BuildingType, TileTerrainType } from "../config/constants";
 
 /**
  * Core game interfaces and types
@@ -90,12 +90,12 @@ export interface IHexagon extends Graphics {
   buildingSprite?: import("pixi.js").Sprite | null;
 }
 
-export interface ICharacter extends AnimatedSprite {
-  gridIndexPosition: number;
-  currentHexagon: IHexagon | null;
-  texturePivot: Point2D;
-  facingDirection: Direction;
-}
+// export interface ICharacter extends AnimatedSprite {
+//   gridIndexPosition: number;
+//   currentHexagon: IHexagon | null;
+//   texturePivot: Point2D;
+//   facingDirection: Direction;
+// }
 
 export type SeedMap = number[][];
 
