@@ -27,22 +27,34 @@ export interface ResourceLedger {
   mana: number;
   lumber: number;
   housing: number;
+  stone: number;
+  ironOre: number;
 }
+
+export interface AdvancedResourceLedger {
+  iron: number;
+}
+
+export type FullResourceLedger = ResourceLedger & AdvancedResourceLedger;
 
 export interface BuildingDefinition {
   type: BuildingType;
   name: string;
-  cost: Partial<ResourceLedger>;
-  tiles?: {
-    production?: Partial<Record<TileTerrainType, Partial<ResourceLedger>>>;
-    allowed?: TileTerrainType[];
+  gameSettings: {
+    cost: Partial<FullResourceLedger>;
+    limit?: number;
+    grant?: Partial<FullResourceLedger>;
+    production?: Partial<FullResourceLedger>;
+    tiles?: {
+      production?: Partial<Record<TileTerrainType, Partial<FullResourceLedger>>>;
+      allowed?: TileTerrainType[];
+    };
   };
-  grant?: Partial<ResourceLedger>;
-  production?: Partial<ResourceLedger>;
-  upkeep?: Partial<ResourceLedger>;
-  iconPath: string;
-  sizeRatio?: number;
-  centerOffset?: { x: number; y: number };
+  graphics: {
+    iconPath: string;
+    sizeRatio?: number;
+    centerOffset?: { x: number; y: number };
+  };
 }
 
 export interface BuildingInstance {

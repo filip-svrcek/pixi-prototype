@@ -22,15 +22,15 @@ export const STARTING_RESOURCES = {
   mana: 40,
   lumber: 80,
   housing: 5,
+  stone: 0,
+  ironOre: 0,
 };
-
 
 export enum TileTerrainType {
   GRASSLANDS = 0,
   FOREST = 1,
   MOUNTAIN = 2,
   WATER = 3,
-  DESERT = 4,
 }
 
 export const TILE_TERRAIN_COLORS: Record<TileTerrainType, number> = {

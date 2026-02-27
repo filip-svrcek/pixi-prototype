@@ -50,7 +50,7 @@ export class BuildingSelector {
       background.endFill();
 
       // Building icon
-      const texture = Texture.from(building.iconPath);
+      const texture = Texture.from(building.graphics.iconPath);
       const iconSprite = new Sprite(texture);
       iconSprite.width = iconSprite.width * (this.BUTTON_SIZE - 8) / iconSprite.width;
       iconSprite.height = iconSprite.height * (this.BUTTON_SIZE - 8) / iconSprite.height;

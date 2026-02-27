@@ -3,6 +3,7 @@ import {
   BuildingDefinition,
   BuildingInstance,
   District,
+  FullResourceLedger,
   HeroProfile,
   IHexagon,
   ResourceLedger,
@@ -58,11 +59,11 @@ export class CityState {
     }
 
     const definition = getBuildingDefinition(type);
-    if (!this.canAfford(definition.cost)) {
+    if (!this.canAfford(definition.gameSettings.cost)) {
       return null;
     }
 
-    this.applyCost(definition.cost);
+    this.applyCost(definition.gameSettings.cost);
 
     const building: BuildingInstance = {
       type,
@@ -89,7 +90,7 @@ export class CityState {
     return getBuildingDefinition(type);
   }
 
-  getProductionMultiplier(resource: keyof ResourceLedger): number {
+  getProductionMultiplier(resource: keyof FullResourceLedger): number {
     const multiplier = this.heroes
       .filter((hero) => hero.bonus.resource === resource)
       .reduce((acc, hero) => acc * hero.bonus.multiplier, 1);

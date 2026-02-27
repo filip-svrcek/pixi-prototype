@@ -25,7 +25,7 @@ export class Game {
 
   constructor(config: IGameConfig) {
     this.seedMap = config.seedMap;
-    
+
     this.app = new Application({
       background: COLORS.BACKGROUND_DEFAULT,
       resizeTo: config.resizeTo,
@@ -113,21 +113,25 @@ export class Game {
       return;
     }
 
-    const texture = Texture.from(building.iconPath);
+    const texture = Texture.from(building.graphics.iconPath);
     const sprite = new Sprite(texture);
     const centerX =
       hexagon._bounds.minX +
       (hexagon._bounds.maxX - hexagon._bounds.minX) / 2 +
-      (building.centerOffset?.x ?? 0);
+      (building.graphics.centerOffset?.x ?? 0);
     const centerY =
       hexagon._bounds.minY +
       (hexagon._bounds.maxY - hexagon._bounds.minY) / 2 +
-      (building.centerOffset?.y ?? 0);
+      (building.graphics.centerOffset?.y ?? 0);
 
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(centerX, centerY);
-    sprite.width = building.sizeRatio ? sprite.width * building.sizeRatio : sprite.width;
-    sprite.height = building.sizeRatio ? sprite.height * building.sizeRatio : sprite.height;
+    sprite.width = building.graphics.sizeRatio
+      ? sprite.width * building.graphics.sizeRatio
+      : sprite.width;
+    sprite.height = building.graphics.sizeRatio
+      ? sprite.height * building.graphics.sizeRatio
+      : sprite.height;
 
     this.board.getContainer().addChild(sprite as any);
     hexagon.buildingSprite = sprite;
