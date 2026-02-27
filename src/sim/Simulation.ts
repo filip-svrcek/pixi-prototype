@@ -34,12 +34,9 @@ export class Simulation {
       iron: 0,
     };
 
-    this.city.getDistricts().forEach((district) => {
-      if (!district.building) {
-        return;
-      }
+    this.city.getBuildings().forEach((building) => {
 
-      const definition = BUILDINGS[district.building.type];
+      const definition = BUILDINGS[building.type];
       Object.entries(definition?.gameSettings?.production ?? {}).forEach(([key, value]) => {
         const resourceKey = key as keyof FullResourceLedger;
         const multiplier = this.city.getProductionMultiplier(resourceKey);

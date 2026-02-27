@@ -1,4 +1,4 @@
-import { Graphics } from "pixi.js";
+import { Graphics, Sprite } from "pixi.js";
 import { BuildingType, TileTerrainType } from "../config/constants";
 
 /**
@@ -62,12 +62,6 @@ export interface BuildingInstance {
   level: number;
 }
 
-export interface District {
-  id: string;
-  coords: GridCoords;
-  building: BuildingInstance | null;
-}
-
 export interface HeroBonus {
   resource: keyof ResourceLedger;
   multiplier: number;
@@ -85,9 +79,9 @@ export interface IHexagon extends Graphics {
   hexagonGridCoords: GridCoords;
   neighbors: IHexagon[];
   tempPathCalc?: PathNode;
-  baseTint?: number;
-  district?: District;
-  buildingSprite?: import("pixi.js").Sprite | null;
+  buildingSprite?: Sprite | null;
+  building?: BuildingInstance | null;
+  tileTerrain: TileTerrainType;
 }
 
 // export interface ICharacter extends AnimatedSprite {

@@ -48,7 +48,7 @@ export class Game {
     this.app.stage.addChild(this.board.getContainer());
 
     // Initialize city state and simulation
-    this.city = new CityState(this.board.getHexagons());
+    this.city = new CityState();
     this.simulation = new Simulation(this.city);
 
     // Initialize HUD

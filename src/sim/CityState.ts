@@ -2,7 +2,6 @@ import { BuildingType, STARTING_RESOURCES } from "../config/constants";
 import {
   BuildingDefinition,
   BuildingInstance,
-  District,
   FullResourceLedger,
   HeroProfile,
   IHexagon,
@@ -12,7 +11,7 @@ import { getBuildingDefinition } from "./BuildingCatalog";
 
 export class CityState {
   private resources: ResourceLedger = { ...STARTING_RESOURCES };
-  private districts: Map<string, District> = new Map();
+  private buildings:  Map<string, BuildingInstance> = new Map();
   private heroes: HeroProfile[] = [
     {
       id: "hero-arcanist",
@@ -21,18 +20,6 @@ export class CityState {
     },
   ];
 
-  constructor(hexagons: IHexagon[]) {
-    hexagons.forEach((hexagon) => {
-      const id = `${hexagon.hexagonGridCoords.x},${hexagon.hexagonGridCoords.y}`;
-      const district: District = {
-        id,
-        coords: hexagon.hexagonGridCoords,
-        building: null,
-      };
-      this.districts.set(id, district);
-      hexagon.district = district;
-    });
-  }
 
   getResources(): ResourceLedger {
     return { ...this.resources };
@@ -49,12 +36,23 @@ export class CityState {
     });
   }
 
-  placeBuilding(hexagon: IHexagon, type: BuildingType): BuildingDefinition | null {
-    if (!hexagon.district) {
-      return null;
+  isBuildingAllowedOnTile(hexagon: IHexagon, type: BuildingType): boolean {
+    const definition = getBuildingDefinition(type);
+    const allowedTiles = definition.gameSettings.tiles?.allowed;
+    console.log("Allowed tiles for building:", allowedTiles);
+    console.log("Hexagon terrain type:", hexagon.tileTerrain);
+    if (allowedTiles && !allowedTiles.includes(hexagon.tileTerrain)) {
+      return false;
     }
 
-    if (hexagon.district.building) {
+    return true;
+  }
+
+  placeBuilding(hexagon: IHexagon, type: BuildingType): BuildingDefinition | null {
+    if (hexagon.building) {
+      return null;
+    }
+    if (!this.isBuildingAllowedOnTile(hexagon, type)) {
       return null;
     }
 
@@ -70,8 +68,9 @@ export class CityState {
       level: 1,
     };
 
-    hexagon.district.building = building;
-
+    hexagon.building = building;
+    const id = `${hexagon.hexagonGridCoords.x},${hexagon.hexagonGridCoords.y}`;
+    this.buildings.set(id, building);
     return definition;
   }
 
@@ -82,8 +81,8 @@ export class CityState {
     });
   }
 
-  getDistricts(): District[] {
-    return Array.from(this.districts.values());
+  getBuildings(): BuildingInstance[] {
+    return Array.from(this.buildings.values());
   }
 
   getBuildingDefinition(type: BuildingType): BuildingDefinition {

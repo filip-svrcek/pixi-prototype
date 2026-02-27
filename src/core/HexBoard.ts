@@ -58,7 +58,7 @@ export class HexBoard {
   private createHexagon(
     position: { x: number; y: number },
     size: number,
-    variant: number,
+    variant: TileTerrainType,
     gridCoords: GridCoords,
   ): IHexagon {
     const hexagon = Object.assign(new Graphics(), {
@@ -66,14 +66,14 @@ export class HexBoard {
       hexagonPivot: { ...HEXAGON_PIVOT },
       hexagonGridCoords: gridCoords,
       neighbors: [] as IHexagon[],
-      baseTint: TILE_TERRAIN_COLORS[variant as TileTerrainType],
+      tileTerrain: variant,
     }) as IHexagon;
 
     // Set fill and line style
     hexagon.beginFill(COLORS.HEXAGON_DEFAULT);
     hexagon.lineStyle(3, COLORS.HEXAGON_BORDER, 0, 0, true);
     hexagon.alpha = 1;
-    hexagon.tint = hexagon.baseTint ?? COLORS.DISTRICT_EMPTY;
+    hexagon.tint = TILE_TERRAIN_COLORS[variant] ?? COLORS.DISTRICT_EMPTY;
 
     // Calculate hexagon points
     const points: Point[] = [];
@@ -161,15 +161,5 @@ export class HexBoard {
    */
   setInteractive(interactive: boolean): void {
     this.container.interactiveChildren = interactive;
-  }
-
-  /**
-   * Set the base tint for a hexagon (used for district visuals)
-   */
-  setHexagonBaseTint(hexagon: IHexagon, tint: number): void {
-    hexagon.baseTint = tint;
-    if (hexagon.tint !== COLORS.HEXAGON_HOVER) {
-      hexagon.tint = tint;
-    }
   }
 }
