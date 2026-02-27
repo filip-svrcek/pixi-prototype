@@ -71,7 +71,6 @@ export enum ResourceType {
 export enum BuildingType {
   TOWN_CENTER = "town_center",
   FARM = "farm",
-  MANA_WELL = "mana_well",
   WOODCUTTER = "woodcutter",
   BLACKSMITH = "blacksmith",
   QUARRY = "quarry",

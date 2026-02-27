@@ -1,5 +1,5 @@
 import { AnimatedSprite, Graphics } from "pixi.js";
-import { Direction, BuildingType } from "../config/constants";
+import { Direction, BuildingType, TileTerrainType } from "../config/constants";
 
 /**
  * Core game interfaces and types
@@ -33,6 +33,10 @@ export interface BuildingDefinition {
   type: BuildingType;
   name: string;
   cost: Partial<ResourceLedger>;
+  tiles?: {
+    production?: Partial<Record<TileTerrainType, Partial<ResourceLedger>>>;
+    allowed?: TileTerrainType[];
+  };
   grant?: Partial<ResourceLedger>;
   production?: Partial<ResourceLedger>;
   upkeep?: Partial<ResourceLedger>;
