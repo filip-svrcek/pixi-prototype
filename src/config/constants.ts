@@ -5,14 +5,14 @@ export const HEXAGON_SPACING_X = 1.8;
 export const HEXAGON_SPACING_Y = 1.6;
 export const HEXAGON_OFFSET_X = 0.9;
 
-// Character settings
-export const CHARACTER_TEXTURE_PIVOT = { x: 45, y: 130 };
-export const CHARACTER_ANIMATION_SPEED = 0.4;
+// // Character settings
+// export const CHARACTER_TEXTURE_PIVOT = { x: 45, y: 130 };
+// export const CHARACTER_ANIMATION_SPEED = 0.4;
 
-// Movement settings
-export const MOVEMENT_TIME_MS = 500;
-export const MOVEMENT_FRAMES = 25;
-export const MOVEMENT_FRAME_TIME = MOVEMENT_TIME_MS / MOVEMENT_FRAMES;
+// // Movement settings
+// export const MOVEMENT_TIME_MS = 500;
+// export const MOVEMENT_FRAMES = 25;
+// export const MOVEMENT_FRAME_TIME = MOVEMENT_TIME_MS / MOVEMENT_FRAMES;
 
 // City simulation settings
 export const CITY_TICK_MS = 1000;
@@ -49,15 +49,15 @@ export const COLORS = {
   DISTRICT_EMPTY: 0x3b2d4a,
 } as const;
 
-export enum AnimationType {
-  IDLE = "idle",
-  WALK = "walk",
-}
+// export enum AnimationType {
+//   IDLE = "idle",
+//   WALK = "walk",
+// }
 
-export enum Direction {
-  LEFT = "left",
-  RIGHT = "right",
-}
+// export enum Direction {
+//   LEFT = "left",
+//   RIGHT = "right",
+// }
 
 export enum ResourceType {
   GOLD = "gold",
