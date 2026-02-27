@@ -39,7 +39,7 @@ export class BuildingSelector {
       // Container for the button
       const buttonContainer = new Container();
       buttonContainer.position.set(xPosition, this.PADDING);
-      buttonContainer.interactive = true;
+      buttonContainer.eventMode = "static";
       buttonContainer.cursor = "pointer";
 
       // Background rectangle
